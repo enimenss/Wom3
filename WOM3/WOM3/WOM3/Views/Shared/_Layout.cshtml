@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    
+    <link rel="stylesheet" type="text/css" href="~/Content/PagedList.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/profilestyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/Path.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/lay.css">
+</head>
+<body class="backgroundslika">
+    <div>
+    <nav class="navbar navbar-inverse" style="margin-top: 20px; border-width:1.5px; border-color:black; border-style:solid; margin-bottom: 1%; background-image: url('http://localhost:5611/Images/navbar.png'); background-size: 100% 100%;background-repeat: no-repeat;padding-bottom:0.5%;background-size: cover;height: 8%">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" style="color: black; margin-top: 10px">War of Mages</a>
+            </div>
+            <div class="navbar-collapse collapse" id="myNavbar"> 
+                <ul class="nav navbar-nav">
+                    @if (!string.Equals(Session["user"], "Administrator"))
+                    {
+
+                    <li >@Html.ActionLink("Profile", "Profiles", "Home", new { id = Session["user"] }, new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Profile" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+                    <li >@Html.ActionLink("Ranking", "result", "Home", new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Result" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+
+                    <li >@Html.ActionLink("Item shop", "Shoping", "Home", new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Shoping" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+
+                    <li>@Html.ActionLink("Chat", "Message", "Home", new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Message" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+
+
+                    <li>@Html.ActionLink("News", "News", "Home", new { id = "News" }, new { @style = "color: black; margin-top: 10px; margin-bottom: 10px;float:left;" + (string)(@ViewBag.Title == "News" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })<span style="width:15px;float:right;margin-top: 10px; margin-bottom: 10px;" id="notify"></span></li>
+                    
+                    <li>
+                        <a href="#" style="color: black; margin-top: 10px">
+                                <span  onclick="getMessages()" class="glyphicon glyphicon-envelope"></span>
+                            </a>
+                            @*<span class="badge badge-notify">1</span>*@
+                            <ul id="messagesDrop" class="dropdown-content backgroundslika zaAjaxPoruke"></ul>
+                     </li>
+                    <li >
+                        @*<button onclick="getRequests()" style="color: black;font-size:24px; margin-top:10px;"><span class="glyphicon glyphicon-user"></span></button>*@
+                        <a href="#" style="color: black; margin-top: 10px;">
+                            <span style="float:left;" onclick="getRequests()" class="glyphicon glyphicon-user"></span><span style="float:right;" id="notifyFriend"></span></a>
+                        
+                            <table class="table"><tbody id="myDropdown"  class="backgroundslika dropdown-content" style="margin-left:0;width:100%"></tbody></table>
+
+                      </li>
+                    }
+                    else
+                    {
+                        <li class="@(ViewBag.Title == "PostNews" ? "active" : "")">@Html.ActionLink("PostNews", "PostNews", "Home")</li>
+                    }
+                </ul>
+                
+                    <ul class="nav navbar-nav navbar-right">
+                                                @if (Session["user"] != null)
+                                                {
+
+                                                    <li><a href="#" style="color: black; margin-top: 10px;" align="right">Download game  <span class="glyphicon glyphicon-download-alt"></span></a></li>
+                                                    <li>
+                                <a href="#" onclick="OdjaviSe()"  style="color: black; margin-top: 10px" >Log-Out&nbsp;&nbsp;<span class="glyphicon glyphicon-log-out"></span></a>
+                                @*<a class="navbar-link" onclick="document.getElementById('odjavljivanje').submit()">Log-Out&nbsp;&nbsp;<span class="glyphicon glyphicon-log-out"></span></a>*@
+                            </li>
+                        }
+                    </ul>
+              
+
+            </div>
+        </div>
+    </nav>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/MyScript.js"></script>
+    <script type="text/javascript" src="~/Scripts/canvasjs.min.js"></script> 
+    <div class="body-content">
+   
+        @RenderBody()
+        <hr />
+
+        <footer style="height: 10%; font-size: 150%; color: white; text-align: center; margin-top: 5%">
+            War of Mages, Biser2® 2017
+        </footer>
+    </div>
+        </div>
+
+
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+   
+    <script src="~/signalr/hubs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+   
+    <script>
+
+
+       
+        $(function () {
+      
+
+            var wom = $.connection.WomHub;
+             @{Random rnd = new Random(Environment.TickCount); }
+                
+                 wom.client.News = function (naslov, poruka, datum, number) {
+                    @{
+                        int num1 = rnd.Next(Environment.TickCount);
+                        int num = num1 % 4 + 1;
+                     }
+
+                     notification(number);
+                $('#vesti').prepend("<div class='news-item'><div class='row'><div class='col-md-4' style='padding-top: 2%'><img alt='Bootstrap Image Preview' src=http://localhost:5611/mages/mage0"+@num+".png width='200' height='200' style='border-width: 2px; border-color: black; border-style: solid; border-radius: 5%;' /></div><div class='col-md-8'><h3 class='news-title' style='font-weight: 900'>" + naslov + "</h3><p style='margin-left: 8%'>" + poruka + "</p><p style='margin-left: 8%'>" + datum + "</p><div class='news-read-more'><button>Read more</button></div></div></div></div> ")
+                 };
+
+                 wom.client.primiPoruku = function (message, kome, datum) {
+
+                     var upisiPoruku = $("#" + kome + "m");
+                     upisiPoruku.append("<div class='round-corner' style='word-wrap: break-word;margin-left:5%;margin-top:2.5%;margin-bottom:2.5%;float:left;background-color:dimgrey;max-width:45%'>" + htmlEncode(message) + "</div><div style='width:100%;float:left'></div>");
+                     if ( document.getElementsByClassName('chatProba').length!=0) {
+                        $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+                     }
+                     
+
+                     
+                 }
+
+                 wom.client.mojaPoruka=function(message,sebi,datum){
+                     var upisiPoruku = $("#" + sebi + "m");
+                     upisiPoruku.append("<div class='round-corner' style='word-wrap: break-word;margin-right:5%;margin-top:2.5%;margin-bottom:2.5%;float:right;background-color:blue;color:white;max-width:45%;text-align:right;'>" + htmlEncode(message) + "</div><div style='width:100%;float:left'></div>");
+                     if (document.getElementsByClassName('chatProba').length != 0) {                   
+                    $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+                     }
+
+
+                 }
+
+                 wom.client.onlineSam = function (name,avatar) {
+
+                     var update = $("#" + name);
+
+                     update.empty();
+                     update.prepend(" <td width='20px'><div style='float:left' class='circle'></div></td>");
+                     update.append("<td style='float:left'><img src=http://localhost:5611/Images/" + avatar + " width='25' height='25' />&nbsp;</td>");
+                     update.append("<td style='float:left'><strong><a href=http://localhost:5611/Home/Profiles/" + name + ">" + name + "</a>&nbsp;</strong></td>");
+
+
+                 }
+
+                 wom.client.offSam = function (name,avatar) {
+                     var update = $("#" + name);
+                     update.empty();
+                     update.prepend(" <td width='20px'><div style='float:left' class='circleOff'></div></td>");
+                     update.append("<td style='float:left'><img src=http://localhost:5611/Images/" + avatar + " width='25' height='25' />&nbsp;</td>");
+                     update.append("<td style='float:left'><strong><a href=http://localhost:5611/Home/Profiles/" + name + ">" + name + "</a>&nbsp;</strong></td>");
+                 }
+
+                 wom.client.Prihvacen = function (username,avatar) {
+                $('#reqMess').empty();
+                $('#reqMess').append("<button id='msg' onclick='posaljiP()' value='" + username + "' class='btn btn-primary btn-success'>Send Message &nbsp;<span class='glyphicon glyphicon-user'></span></button>");
+                $('#reqMess').append("<textarea id='posalji' placeholder='Posalji poruku ' class='dropdown-content'></textarea> <strong id='isSend'></strong>");
+                     posaljiP = function () {
+                         document.getElementById("posalji").classList.toggle("show");
+                     }
+                $('#posalji').keypress(function (e) {
+                         var key = e.which;
+                         if (key == 13)  
+                         {
+                             wom.server.posaljiPoruku($('#posalji').val(), $('#msg').val());
+                        $('#posalji').val('')
+                             var obavestenje = document.getElementById("isSend");
+                             if (obavestenje != null)
+                                 obavestenje.innerHTML = "Poruka poslata"
+                             document.getElementById("posalji").classList.toggle("show");
+
+                         }
+                     });
+                
+                @{
+                    var my = Session["user"].ToString();
+
+                     }
+
+                     var noviPrijatelj = $('#friends');
+                     noviPrijatelj.append(" <tr id='" + username + "'> <td><div style='float:left' class='circleOff'></div></td><td style='float:left'><img src="+ "http://localhost:5611/Images/" + avatar + " width='25' height='25' />&nbsp;</td> <td style='float:left'><strong><a href=" + "http://localhost:5611/Home/Profiles/" + username + ">" + username + "</a>&nbsp;</strong></td>");
+
+                 }
+
+                 wom.client.Odbijen = function (username) {
+                $('#reqMess').empty();
+                $('#reqMess').append("<button id='request'  value='" + username + "' class='posalji btn btn-primary btn-primary'>Send Request &nbsp;<span class='glyphicon glyphicon-user'></span></button>");
+                $('.posalji').click(function () {
+                         wom.server.friendRequest('@Session["user"].ToString()', $(this).val())
+                    var x = $('#reqMess');
+                         x.empty();
+                         x.append("<span><strong>Zahtev za Prijateljstvo poslat</strong></span>");
+                     });
+                 }
+
+            $('#posalji').keypress(function (e) {
+                     var key = e.which;
+                     if (key == 13)  
+                     {
+                         wom.server.posaljiPoruku($('#posalji').val(), $('#msg').val());
+                    $('#posalji').val('')
+                         var obavestenje = document.getElementById("isSend");
+                         if(obavestenje!=null)
+                             obavestenje.innerHTML = "Poruka poslata"
+                         document.getElementById("posalji").classList.toggle("show");
+
+                     }
+                 });
+
+
+
+
+            wom.client.Notify = function (num) {
+                $('#notifyFriend').empty();
+                     if (num > 0) {
+                         notifyFriendRequest(num);
+                     }
+                 }
+
+           
+            $.connection.hub.qs = { "Name": '@Session["user"].ToString()' };
+            $.connection.hub.start().done(function () {
+                $('#post').click(function () {
+
+                         wom.server.send($('#naslov').val(),$('#poruka').val());
+
+
+                     }
+
+                );
+
+                //$("#odjavljivanje").submit(function (event) {
+                //     console.log("uso");
+                //     chat.server.offlineSam();
+                // });
+
+                OdjaviSe = function () {
+                    wom.server.offlineSam();
+                   
+                    location.href = '@Url.Content("~/Home/logout")';
+                }
+
+                $('.posalji').click(function () {
+                     wom.server.friendRequest('@Session["user"].ToString()', $(this).val())
+                    var x = $('#reqMess');
+                     x.empty();
+                     x.append("<span><strong>Zahtev za Prijateljstvo poslat</strong></span>")
+
+
+                });
+
+
+                 getMessages = function () {
+                     console.log("hah");
+
+                    $.ajax({
+                     type: 'get',
+                        dataType: 'json',
+                        cache: false,
+                        url: '/Home/getM',
+                        success: function (obj) {
+                             var response = JSON.parse(obj);
+                             var dropdown = $('#messagesDrop');
+
+
+                             dropdown.empty();
+                             if (jQuery.isEmptyObject(response)) {
+                                 dropdown.prepend("<li><strong style='collor:white'>NemaPoruka</strong></li>")
+
+                            }
+
+                             document.getElementById("messagesDrop").classList.toggle("show");
+                            $.each(response, function (i, f) {
+                                dropdown.append("<li style='margin-top: 0px; background-image:url(http://localhost:5611/Images/scroll.png); background-size: 100% 100%;background-repeat: no-repeat; background-origin: content-box;'><a href='" + "http://localhost:5611/Home/Message/" + f.Sender + "'><p><img src='" + "http://localhost:5611/Images/" + f.Jpg + "' width='25' height='25' />&nbsp;<span><strong>" + f.Sender + "</strong><span></p><p>" + f.Message + "</p></a><p style='color:#808080;float:right'>" + f.Datum + "</p></li>");
+                                 dropdown.append("<li height='1'></li>")
+
+                            });
+                         }
+                     });
+                 }
+
+
+
+
+                 getRequests = function () {
+
+                    $.ajax({
+                     type: 'get',
+                        dataType: 'json',
+                        cache: false,
+                        url: '/Home/getRequests',
+                        success: function (obj) {
+                             var response = JSON.parse(obj);
+                             var dropdown = $('#myDropdown');
+                             console.log(obj);
+
+                             dropdown.empty();
+                             if (jQuery.isEmptyObject(response)) {
+                                 dropdown.prepend("<tr><td><strong style='color:white'>Nemate zahteva za prijateljstvo</strong></td></tr>");
+
+                             }
+                            $.each(response, function (i, f) {
+                                 console.log(f);
+                                 dropdown.prepend("<tr style='background-image:url(http://localhost:5611/Images/scroll.png); background-size: 100% 100%;background-repeat: no-repeat; background-origin: content-box;'><td ><a style='margin-bottom:20%' href=" + "http://localhost:5611/Home/Profiles/" + f.Username + "><img src=" + "http://localhost:5611/Images/" + f['Avatar'] + " width='20' height='20' />&nbsp;<strong>" + f.Username + "</strong></a></td>&nbsp;<td style='text-align: center'><button  class='btn btn-sm btn-success' style='margin-top:22%'  value='" + f.Username + "' id='" + f.Username + "a'>Accept&nbsp:<span class='glyphicon glyphicon-user'></span></button></td><td>&nbsp;<button style='margin-top:22%' class='btn btn-sm btn-danger' value='" + f.Username + "' id='" + f.Username + "d'>Deny&nbsp;<span class='glyphicon glyphicon-trash'></span></button></td></tr>")
+
+                                document.getElementById(f.Username + "a").onclick = function () {
+                                     var cale = this.parentElement.parentElement;
+                                     var proba = this.parentElement.parentElement.parentElement;
+                                     proba.removeChild(cale);
+                                     wom.server.af(f.Username);
+
+                                 }
+                                 document.getElementById(f.Username + "d").onclick = function () {
+                                     var cale = this.parentElement.parentElement;
+                                     var proba = this.parentElement.parentElement.parentElement;
+                                     proba.removeChild(cale);
+                                     wom.server.df(f.Username);
+
+                                 }
+
+                             });
+
+                             document.getElementById("myDropdown").classList.toggle("show");
+                         }
+                     });
+                 }
+
+                 });
+        });
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

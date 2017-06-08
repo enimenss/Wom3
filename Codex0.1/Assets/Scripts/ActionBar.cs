@@ -112,22 +112,22 @@ public class ActionBar : NetworkBehaviour
           progress = 0.92f;
           oldProg = 0f;
           progTex = ProgressUpdate(progress, color);*/
-        spell1PressName = "MageSpell1Press";
-        spell2PressName = "MageSpell2Press";
-        spell2DownName = "MageSpell2Down"; ;
-        spell2UpName = "MageSpell2Up"; ;
-        spell3PressName = "MageSpell3Press";
-        spell4PressName = "MageSpell4Press"; ;
-        spellLCPressName = "MageSpellLCPress";
-        spellLCDownName = "MageSpellLCDown";
-        spellLCUpName = "MageSpellLCUp";
-        spellRCPressName = "MageSpellRCPress";
-        spellRCDownName = "MageSpellRCDown";
-        spellRCUpName = "MageSpellRCUp";
-        cooldown1 = 10f;
-        cooldown2 = 10f;
-        cooldown3 = 35f;
-        cooldown4 = 20f;
+        //spell1PressName = "MageSpell1Press";
+        //spell2PressName = "MageSpell2Press";
+        //spell2DownName = "MageSpell2Down"; ;
+        //spell2UpName = "MageSpell2Up"; ;
+        //spell3PressName = "MageSpell3Press";
+        //spell4PressName = "MageSpell4Press"; ;
+        //spellLCPressName = "MageSpellLCPress";
+        //spellLCDownName = "MageSpellLCDown";
+        //spellLCUpName = "MageSpellLCUp";
+        //spellRCPressName = "MageSpellRCPress";
+        //spellRCDownName = "MageSpellRCDown";
+        //spellRCUpName = "MageSpellRCUp";
+        //cooldown1 = 10f;
+        //cooldown2 = 10f;
+        //cooldown3 = 35f;
+        //cooldown4 = 20f;
 
         _isPressed = false;
         _isPressedQ = false;
@@ -505,7 +505,7 @@ public class ActionBar : NetworkBehaviour
         if (GetComponent<Combat>().mana - 35 >= 0)
         {
             GetComponent<Spells>().CmdInvisibleStart();
-            GetComponent<Spells>().Invoke("CmdInvisibleEnd", 5f);
+           // GetComponent<Spells>().Invoke("CmdInvisibleEnd", 5f);
             coolTime3 = Time.time;
             GetComponent<Combat>().CmdManaUse(35);
         }

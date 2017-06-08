@@ -486,6 +486,8 @@ namespace Prototype.NetworkLobby
         }
         public void cancel()
         {
+            this.dontDestroyOnLoad = false;
+            Destroy(this, 0.5f);
             SceneManager.LoadScene("MainScene");
         }
     }

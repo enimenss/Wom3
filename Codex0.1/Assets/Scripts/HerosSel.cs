@@ -9,9 +9,10 @@ public class HerosSel : MonoBehaviour, IPointerClickHandler
 
     public Prototype.NetworkLobby.LobbyPlayerList p;
     public string slika;
+    public GameObject outline;
     public void OnPointerClick(PointerEventData eventData)
     {
-        p.Selected2 = slika;
+        p.Select(this);
         Debug.Log(slika);
     }
 }

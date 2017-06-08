@@ -4,17 +4,35 @@ using UnityEngine;
 using Assets.Class;
 using UnityEngine.SceneManagement;
 using System;
+using System.Text;
 
 public class API : MonoBehaviour
 {
 
     public string APIAddress = "http://localhost:5611/api/Users1";
+    public string CreateMD5(string input)
+    {
+        // Use input string to calculate MD5 hash
+        using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+        {
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
 
+            // Convert the byte array to hexadecimal string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                sb.Append(hashBytes[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+    }
     public void Login(string username, string password, Delegate s)
     {
         try
         {
-            logUser novi = new logUser { userName = username, hashPassword = password };
+            string hash = CreateMD5(password);
+            logUser novi = new logUser { userName = username, hashPassword = hash };
             Debug.Log(novi.userName + " " + novi.hashPassword);
             string ourPostData = JsonUtility.ToJson(novi);
             Debug.Log(ourPostData);

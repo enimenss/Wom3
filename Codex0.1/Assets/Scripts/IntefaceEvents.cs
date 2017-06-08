@@ -62,11 +62,11 @@ public class IntefaceEvents : MonoBehaviour
     }
     public void OnShopClick()
     {
-        System.Diagnostics.Process.Start("http://localhost:5611/Home/GotToShop/" + GameObject.Find("controler").GetComponent<PlayerData>().token.token);
+        System.Diagnostics.Process.Start("http://10.66.48.71:5000/Home/GotToShop/" + GameObject.Find("controler").GetComponent<PlayerData>().token.token);
     }
     public void OnNewsClick()
     {
-        System.Diagnostics.Process.Start("http://localhost:5611/Home/GotToNews/" + GameObject.Find("controler").GetComponent<PlayerData>().token.token);
+        System.Diagnostics.Process.Start("http://10.66.48.71:5000/Home/GotToNews/" + GameObject.Find("controler").GetComponent<PlayerData>().token.token);
     }
 
     public void onChangeValue(Dropdown d)
@@ -88,7 +88,8 @@ public class IntefaceEvents : MonoBehaviour
 
     public void OnPlayeGameClivk()
     {
-        SceneManager.LoadScene("Lobby");
+        GameObject.Find("controler").GetComponent<AudioSource>().Stop();
+       SceneManager.LoadScene("Lobby");
     }
 
 }

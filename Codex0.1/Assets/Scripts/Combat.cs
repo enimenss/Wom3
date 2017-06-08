@@ -85,7 +85,7 @@ public class Combat : NetworkBehaviour
     {
         isEnd = false;
         FloatingTextController.Initialize();
-        PlayerName = PlayerName + netId.Value.ToString();
+      //  PlayerName = PlayerName + netId.Value.ToString();
         PlayerNetId = netId;
 
         isVisible = true;
@@ -96,7 +96,7 @@ public class Combat : NetworkBehaviour
         // MaxMana = 200;
         // mana = MaxMana;
         //  health = Maxhealth;
-        //CmdSetAttributes();
+        CmdSetAttributes();
 
         RespawnPositions.Add(new Vector3(-1f, 2f, 0));
         RespawnPositions.Add(new Vector3(3f, 3.2f, 0));
@@ -277,6 +277,13 @@ public class Combat : NetworkBehaviour
 
     void Update()
     {
+        if (isEnd)
+        {
+            SetKills();
+            ShowStatistic();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+            isEnd = true;
         if (isLocalPlayer)
         {   
             if (RegenHealthTimeLast + RegenHealthTimeWait < Time.time)
@@ -296,41 +303,27 @@ public class Combat : NetworkBehaviour
             CmdBar();
             if (health <= 0)
             {
-                // isEnd = true;
-                Debug.Log(LastHitNetId);
-
-                CmdNetworkServerAddKills();
+                isEnd = true;
+                ClientScene.FindLocalObject(LastHitNetId).GetComponent<Combat>().isEnd = true;
+                CmdSetEnd();
+                IsDead = true;
+                SetKills();
+                ShowStatistic();
                 FloatingTextController.CreateFloatingText("YOU ARE DEAD!", this.transform, 0, 0);
-                //  this.gameObject.SetActive(false);
-
-               GameObject tmp= Instantiate(statisticTable);
-                tmp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y-0.5f,0);
-
-                //  killsText= statisticTable.GetComponent<Canvas>().GetComponent<UnityEngine.UI.Text>();
-                GameObject StatisticTable = GameObject.FindGameObjectWithTag("StatisticTable");
-                Transform canvasObject = tmp.transform.Find("Canvas");
-               
-                Transform textTr = canvasObject.transform.Find("TextPoints");
-                Text text = textTr.GetComponent<Text>();
-                text.text = points.ToString();
-
-                Transform textTr2 = canvasObject.transform.Find("TextKills");
-                Text text2 = textTr2.GetComponent<Text>();
-                text2.text = kills.ToString();
-
-                Transform textTr3 = canvasObject.transform.Find("TextName");
-                Text text3 = textTr3.GetComponent<Text>();
-                text3.text = PlayerName.ToString();
-               
                 CmdSetPlayerVisibility(false);
-               
+
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                 Invoke("CmdRespawn", 3);
+                //  Invoke("CmdRespawn", 3);
 
             }
             if (mana < 1)
                 mana = 0;
         }
+    }
+    [Command]
+    public void CmdSetEnd()
+    {
+        isEnd = true;
     }
     [Command]
     public void CmdNetworkServerAddKills()
@@ -554,4 +547,54 @@ public class Combat : NetworkBehaviour
         SetAtributes();
         Debug.Log("BBBBBBBBBB" + GetComponent<Movement>().HeroId);
     }
+    public void ShowStatistic()
+    {
+        // CmdNetworkServerAddKills();
+
+        //  this.gameObject.SetActive(false);
+
+        GameObject tmp = Instantiate(statisticTable);
+        tmp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, 0);
+
+        //  killsText= statisticTable.GetComponent<Canvas>().GetComponent<UnityEngine.UI.Text>();
+        GameObject StatisticTable = GameObject.FindGameObjectWithTag("StatisticTable");
+        Transform canvasObject = tmp.transform.Find("Canvas");
+
+        Transform textTr = canvasObject.transform.Find("TextPoints");
+        Text text = textTr.GetComponent<Text>();
+        text.text = points.ToString();
+
+        Transform textTr2 = canvasObject.transform.Find("TextKills");
+        Text text2 = textTr2.GetComponent<Text>();
+        text2.text = kills.ToString();
+
+        Transform textTr3 = canvasObject.transform.Find("TextName");
+        Text text3 = textTr3.GetComponent<Text>();
+        text3.text = PlayerName.ToString();
+    }
+
+    public void SetKills()
+    {
+        if (isLocalPlayer)
+        {
+            if (IsDead)
+                kills = 0;
+            else
+                kills = 1;
+        }
+    }
+
+    public void SetItemsAttributess(ShwoItem a, ShwoItem b)
+    {
+        heroDamage += int.Parse(a.Demage.ToString());
+        heroDamage += int.Parse(b.Demage.ToString());
+
+        manaRegen += int.Parse(a.ManaReg.ToString());
+        manaRegen += int.Parse(b.ManaReg.ToString());
+
+        healthRegen += int.Parse(a.HealthReg.ToString());
+        healthRegen += int.Parse(b.HealthReg.ToString());
+    }
 }
+
+

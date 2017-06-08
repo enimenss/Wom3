@@ -147,6 +147,7 @@ public class Movement : NetworkBehaviour
             GetComponent<ActionBar>().cooldown3 = 35f;
             GetComponent<ActionBar>().cooldown4 = 20f;
 
+
             GetComponent<ActionBar>().Spell1Texture = GetComponent<SpellTextures>().FiremanSpell1;
             GetComponent<ActionBar>().Spell2Texture = GetComponent<SpellTextures>().FiremanSpell2;
             GetComponent<ActionBar>().Spell3Texture = GetComponent<SpellTextures>().FiremanSpell3;
@@ -207,6 +208,7 @@ public class Movement : NetworkBehaviour
             player.GetComponent<Animator>().runtimeAnimatorController = tmp;
 
         }
+        Debug.Log(GetComponent<ActionBar>().spell1PressName);
     }
 
     void Update()
@@ -449,8 +451,9 @@ public class Movement : NetworkBehaviour
 
             RuntimeAnimatorController tmp = Resources.Load("MageAnimator") as RuntimeAnimatorController;
             player.GetComponent<Animator>().runtimeAnimatorController = tmp;
-            HeroId = 1;
+          //  HeroId = 1;
             GetComponent<ActionBar>().spell1PressName = "MageSpell1Press";
+            
             GetComponent<ActionBar>().spell2PressName = "MageSpell2Press";
             GetComponent<ActionBar>().spell2DownName = "MageSpell2Down"; ;
             GetComponent<ActionBar>().spell2UpName = "MageSpell2Up"; ;
@@ -487,7 +490,7 @@ public class Movement : NetworkBehaviour
         {
             RuntimeAnimatorController tmp = Resources.Load("WarlockAnimator") as RuntimeAnimatorController;
             player.GetComponent<Animator>().runtimeAnimatorController = tmp;
-            HeroId = 2;
+           // HeroId = 2;
             GetComponent<ActionBar>().spell1PressName = "WarlockSpell1Press";
             GetComponent<ActionBar>().spell2PressName = "WarlockSpell2Press";
             GetComponent<ActionBar>().spell2DownName = ""; ;
@@ -525,8 +528,9 @@ public class Movement : NetworkBehaviour
         {
             RuntimeAnimatorController tmp = Resources.Load("FiremanAnimator") as RuntimeAnimatorController;
             player.GetComponent<Animator>().runtimeAnimatorController = tmp;
-            HeroId = 3;
+           // HeroId = 3;
             GetComponent<ActionBar>().spell1PressName = "FiremanSpell1Press";
+            Debug.Log("spell "+GetComponent<ActionBar>().spell1PressName);
             GetComponent<ActionBar>().spell2PressName = "FiremanSpell2Press";
             GetComponent<ActionBar>().spell2DownName = "FiremanSpell2Down"; ;
             GetComponent<ActionBar>().spell2UpName = "FiremanSpell2Up"; ;
@@ -563,7 +567,7 @@ public class Movement : NetworkBehaviour
         {
             RuntimeAnimatorController tmp = Resources.Load("ClericAnimator") as RuntimeAnimatorController;
             player.GetComponent<Animator>().runtimeAnimatorController = tmp;
-            HeroId = 4;
+          //  HeroId = 4;
             GetComponent<ActionBar>().spell1PressName = "ClericSpell1Press";
             GetComponent<ActionBar>().spell2PressName = "ClericSpell2Press";
             GetComponent<ActionBar>().spell2DownName = ""; ;

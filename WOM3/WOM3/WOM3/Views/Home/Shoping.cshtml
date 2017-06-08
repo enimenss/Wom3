@@ -1,0 +1,91 @@
+﻿
+@model PagedList.IPagedList<WOM3.Models.Items>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/newsstyle.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Shoping";
+}
+@{
+    if (ViewBag.FriendRequests > 0)
+    {
+        <script>
+            notifyFriendRequest(@ViewBag.FriendRequests)
+        </script>
+    }
+}
+
+@{
+    WOM3.Models.User user = (WOM3.Models.User)TempData["user"];
+
+    if (user.NumOfNews > 0)
+    {
+        <script>
+    notification(@user.NumOfNews);
+        </script>
+    }
+}
+
+<div class="container" style="background-image: url('http://localhost:5611/Images/scroll.png'); background-size: 100% 100%;
+	background-repeat: no-repeat; background-origin: content-box;">
+    <div class="row" style="margin-top: 4%">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-5">
+            <h3 style="font-weight:900; font-size: 200%; text-align: center;">
+                Item Shop
+            </h3>
+
+            @using (Html.BeginForm("Shoping", "Home", FormMethod.Post))
+            {
+
+                <input type="hidden" name="page" value=@Model.PageNumber />
+
+                foreach (var item in Model)
+                {
+
+                            <div class="news-item">
+                                <div class="row">
+                                    <div class="col-md-6" style="padding-top: 2%">
+                                        <img alt="Bootstrap Image Preview" src="@Url.Content("~/Images/" + item.Image+".PNG")" width="200" height="200" style="border-width: 2px; border-color: black; border-style: solid; border-radius: 5%;" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3 class="news-title" style="font-weight: 900;margin-left: 6%">@item.Image</h3>
+                                        <div style="margin-left: 4%">
+                                            <div class="statistikanaprofilu">
+                                                <p> Health:@item.Health </p>
+                                                <p> Mana:@item.Mana </p>
+                                                <p> HealthReg:@item.HealthReg </p>
+                                                <p> ManaReg:@item.ManaReg </p>
+                                                <p> Demage:@item.Demage </p>
+                                                <p> Price:@item.Price </p>
+                                            </div>
+                                        </div>
+                                        <div class="news-read-more">
+                                            @if (item.Price > user.UserStats.Gold)
+                                            {
+                                            <p>Nemas pare</p>
+                                            }
+                                            else{
+                                            <button type="submit" name="KupiId" value="@item.ID" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Kupi</button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                           }
+                        }
+
+
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Shoping",
+    new { page }))
+
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+</div>

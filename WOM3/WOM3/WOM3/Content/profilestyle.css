@@ -1,0 +1,236 @@
+@import url(https://fonts.googleapis.com/css?family=MedievalSharp);
+
+body, html
+{
+	height: 100%;
+	width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.backgroundslika
+{
+background-image: url("http://localhost:5611/Images/cover.jpg");
+background-position: center;
+background-attachment: fixed;
+background-size: cover;
+}
+
+.x-navbar {
+	background-color: #06193f;
+	background-size: cover;
+	height: 9%;
+}
+
+.zasliku
+{
+	background-size: 100% 100%;
+	margin-top: 2%;
+	margin-left: 19%;
+	margin-right: 19%;
+	border-width: 4px;
+	border-style:solid;
+	border-color:black;
+}
+
+.divzausernameiznadslike
+{
+	/*width: 70%;*/
+	text-align: center;
+}
+
+.usernameiznadslike
+{
+	font-family: 'MedievalSharp';
+	font-size: 173%;
+	color: black;
+	margin-bottom: 0;
+	font-weight: bold;
+}
+
+a, p, h1, h2, h3, h4, h5, h6, div, span
+{
+	font-family: 'MedievalSharp';
+	color: black;
+	font-weight: 900;
+}
+
+a {
+	font-size: 120%;
+	margin-top: 15px;
+}
+
+
+.statistikanaprofilu
+{
+	color: black;
+	font-family: 'MedievalSharp';
+	font-size: 130%;
+	margin-top: 10%;
+	margin-left: 21%;
+	font-weight: 800;
+	
+}
+
+
+.redzatabeluitema
+{	
+	border-width: 3px;
+	border-color: black;
+	border-style: solid;
+}
+
+.tabelazaiteme
+{
+	background-image: url("http://localhost:5611/Images/tablecover.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	margin-bottom: 10%;
+	margin-top: 10%;
+}
+
+.kockica
+{
+	width: 80px;
+	height: 80px;
+	border-width: 3px;
+	border-color: black;
+	border-style: solid;
+}
+
+.inventory {
+	background-image: url("http://localhost:5611/Images/tablecover.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	padding-left: 20%;
+	padding-right: 20%;
+	background-origin: content-box;
+	margin-top: 18%;
+}
+
+.item-container {
+	border-width: 2px;
+	border-color: #633215;
+	border-style: solid;
+	box-shadow: 10px 10px 5px #7a3b0d;
+}
+.item-container:after {
+	content: "";
+	display: block;
+	padding-bottom: 160.635%;
+}
+.item {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.item > button {
+	width: 70%;
+	height: 70%;
+	border-width: 3px;
+	border-color: black;
+	border-style: solid;
+	margin-top: 15%;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	border-radius: 10%;
+}
+
+.mage img {
+	width: 100%;
+}
+
+.news-pagination {
+	text-align: center;
+	margin-top: 2%;
+}
+
+.border-slika
+{
+	 border: 10px solid transparent;
+    -webkit-border-image: url(border.jpg) 30 round; /* Safari 3.1-5 */
+    border-image: url(border.jpg) 30 round;
+}
+
+.border-pagination
+{
+	border-width: 3px; 
+	border-color: black; 
+	border-style: solid;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus 
+{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-scroll .modal-content {
+	background-image: url("http://localhost:5611/Images/scroll.png");
+	background-size: 100% 100%;
+	background-color: transparent;
+	padding: 25px 10px 25px 10px;
+}
+
+.modal-scroll .modal-header {
+	border-bottom: none;
+}
+.modal-scroll .modal-header > * {
+	display: inline;
+	margin-right: 10px;
+}
+
+.modal-scroll .item-icon {
+	width: 100px;
+	height: 100px;
+	left: auto;
+	right: auto;
+	display: block;
+	margin-left: 28%;
+	border-color: black;
+	border-style: solid;
+	border-width: 3px;
+}
+
+.modal-scroll .modal-footer {
+	border-top: none;
+}
+
+.modal-scroll .modal-body {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.modal-content {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}
+
+.modal-scroll hr {
+    height: 30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    margin-bottom: 0;
+}
+.modal-scroll hr:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 10px;
+}

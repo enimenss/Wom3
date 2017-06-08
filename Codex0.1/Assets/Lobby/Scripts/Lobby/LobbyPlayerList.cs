@@ -22,7 +22,7 @@ namespace Prototype.NetworkLobby
         protected VerticalLayoutGroup _layout2;
         protected List<Player> _frends = new List<Player>();
         protected List<Player> _enemy = new List<Player>();
-        public string Selected2;
+        public HerosSel Selected2=null;
         public ItemControler[] prvi = new ItemControler[2];
         public void OnEnable()
         {
@@ -178,7 +178,7 @@ namespace Prototype.NetworkLobby
             if (p != null)
             {
 
-                p.CmdchangeHeor(Selected2);
+                p.CmdchangeHeor(Selected2.slika);
                 p.prvi[0] = prvi[0];
                 p.prvi[1] = prvi[1];
                 //p.HERO.sprite = Resources.Load<Sprite>("Image/" + p.hero) as Sprite;
@@ -187,11 +187,18 @@ namespace Prototype.NetworkLobby
             {
                 p = _enemy.Find(x => x.localPlayer1 == true);
                 Debug.Log(p);
-                p.CmdchangeHeor(Selected2);
+                p.CmdchangeHeor(Selected2.slika);
                 p.prvi[0] = prvi[0];
                 p.prvi[1] = prvi[1];
 
             }
+        }
+        public void Select(HerosSel novi)
+        {
+            if(Selected2!=null)
+                Selected2.outline.SetActive(false);
+            Selected2 = novi;
+            Selected2.outline.SetActive(true);
         }
     }
 }

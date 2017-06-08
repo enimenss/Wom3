@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<WOM3.Models.News>
+@using PagedList.Mvc;
+
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/newsstyle.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "News";
+}
+
+@{
+    if (ViewBag.FriendRequests > 0)
+    {
+        <script>
+            notifyFriendRequest(@ViewBag.FriendRequests)
+        </script>
+    }
+}
+
+<div class="container" style="background-image: url('http://localhost:5611/Images/scroll.png'); background-size: 100% 100%;
+	background-repeat: no-repeat; background-origin: content-box;">
+    <div class="row" style="margin-top: 4%">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <h3 style="font-weight:900; font-size: 200%; text-align: center;">
+                News
+            </h3>
+            <div id="vesti">
+                @{Random rnd = new Random(Environment.TickCount); }
+             @foreach (var news in Model)
+             {
+                 int num1 = rnd.Next(Environment.TickCount);
+                 int num = num1 % 4 + 1;
+                 string http = "http://localhost:5611/mages/mage0" + num+".png";
+
+            <div class="news-item">
+                <div class="row">
+                    <div class="col-md-4" style="padding-top: 2%">
+                        <img alt="Bootstrap Image Preview" src=@http width="200" height="200" style="border-width: 2px; border-color: black; border-style: solid; border-radius: 5%;" />
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="news-title" style="font-weight: 900">@news.Naslov</h3>
+                        <p style="margin-left: 8%">
+                            @news.Info
+                        </p><p style="margin-left: 8%">@news.Datum</p>
+                        <div class="news-read-more">
+                            <button>Read more</button>
+                        </div>
+                    </div>
+                </div>
+            </div>             
+            }
+                </div>
+            <nav class="news-pagination">
+                <div class="pagination" style="font-family: 'Rakkas'; color: black; font-weight: 900;">
+                    @Html.PagedListPager(Model, page => Url.Action("News",
+                    new { id = ViewBag.Username, page = page }))
+                </div>
+            </nav>
+
+
+            </div>
+        <div class="col-md-3">
+        </div>
+        </div>
+    </div>
+
+

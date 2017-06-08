@@ -36,6 +36,7 @@ public class Spells : NetworkBehaviour
     public GameObject portalPrefab;
     public GameObject portalObject;
     public bool portalCreated;
+    public GameObject bubbleObject;
 
     void Start()
     {
@@ -91,6 +92,7 @@ public class Spells : NetworkBehaviour
         tmpClone4.transform.position = new Vector3(this.transform.position.x + Random.Range(1.5f, 3.2f), this.transform.position.y, 0);
         tmpClone5.transform.position = new Vector3(this.transform.position.x - Random.Range(1.3f, 3.1f), this.transform.position.y, 0);
         GetComponent<Combat>().isVisible = false;
+        Invoke("CmdCloneEnds", 5f);
     }
     [Command]
     public void CmdCloneEnds()
@@ -118,6 +120,7 @@ public class Spells : NetworkBehaviour
         GetComponent<Transform>().localScale += new Vector3(-0.7f, -0.7f, -0.7f);
         GetComponent<Movement>().speed = 0.7f;
         GetComponent<Combat>().heroDamage = 30;
+        Invoke("CmdGetBig", 7f);
     }
     [Command]
     public void CmdGetBig()
@@ -177,6 +180,7 @@ public class Spells : NetworkBehaviour
         if (isLocalPlayer)
         {
             GetComponent<ActionBar>().tmpSpell2 = x;
+            // Debug.Log(GetComponent<ActionBar>().tmpSpell2);
         }
     }
 
@@ -225,7 +229,9 @@ public class Spells : NetworkBehaviour
     [Command]
     public void CmdBubble()
     {
+
         RpcBubble();
+        NetworkServer.SpawnWithClientAuthority(bubbleObject, base.connectionToClient);
     }
     [ClientRpc]
     public void RpcBubble()
@@ -234,7 +240,8 @@ public class Spells : NetworkBehaviour
         GameObject tmp = Instantiate(_bubble);
         tmp.transform.position = this.transform.position;
         tmp.GetComponent<BubbleSpellScript>().player = this.gameObject;
-        NetworkServer.SpawnWithClientAuthority(tmp, base.connectionToClient);
+        bubbleObject = tmp;
+
     }
     /* [Command]
      public void CmdFire(Vector3 mousePosition, Vector3 playerPosition)
@@ -321,7 +328,7 @@ public class Spells : NetworkBehaviour
     [ClientRpc]
     public void RpcFireball(GameObject x)
     {
-        x.GetComponent<BuletMovement>().damage = this.GetComponent<Combat>().heroDamage *1.5f;
+        x.GetComponent<BuletMovement>().damage = this.GetComponent<Combat>().heroDamage * 1.5f;
         x.GetComponent<BuletMovement>().PlayerNetId = this.netId;
     }
 
@@ -390,7 +397,7 @@ public class Spells : NetworkBehaviour
     [ClientRpc]
     public void RpcFrostNova(GameObject x)
     {
-        x.GetComponent<GranadeMovement>().spellType =2;
+        x.GetComponent<GranadeMovement>().spellType = 2;
         x.GetComponent<GranadeMovement>().PlayerNetId = this.netId;
     }
 
@@ -427,7 +434,7 @@ public class Spells : NetworkBehaviour
     public void RpcSetNetId(GameObject x)
     {
 
-        x.GetComponent<PoisonDartMovement>().damage = this.GetComponent<Combat>().heroDamage*1.2f;
+        x.GetComponent<PoisonDartMovement>().damage = this.GetComponent<Combat>().heroDamage * 1.2f;
         x.GetComponent<PoisonDartMovement>().PlayerNetId = this.netId;
     }
 
@@ -484,6 +491,7 @@ public class Spells : NetworkBehaviour
         GetComponent<Combat>().manaRegen *= 2;
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Combat>().isVisible = false;
+        Invoke("CmdInvisibleEnd", 5f);
     }
 
     [Command]
@@ -549,3 +557,4 @@ public class Spells : NetworkBehaviour
         GetComponent<ActionBar>().tmpSpell1 = x;
     }
 }
+

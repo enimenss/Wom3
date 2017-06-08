@@ -1,0 +1,106 @@
+﻿@model IEnumerable<WOM3.Models.Messages>
+@using WOM3.Models;
+
+@{
+    ViewBag.Title = "Message";
+}
+
+@{
+    var friends = (List<Friends>)TempData["friends"];
+    string friendId = (string)TempData["Friend"];
+    string id = (string)TempData["Friend"] + "m";
+
+}
+
+@{
+    if (ViewBag.FriendRequests > 0)
+    {
+        <script>
+            notifyFriendRequest(@ViewBag.FriendRequests)
+        </script>
+    }
+}
+
+@{
+
+    if (ViewBag.News>0)
+    {
+        <script>
+            notification(@ViewBag.News);
+        </script>
+    }
+}
+<style>
+    .chatProba{
+
+    }
+    .round-corner {
+        -webkit-border-radius: 5px 5px 5px 5px;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -o-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        padding-left:5%;
+        padding-right:5%;
+    }
+</style>
+
+<div class="row" width="80%" height="100%" style="margin-top:0">
+
+    <div class="col-md-3" width="100%" height="100%" style="float:left;margin-top:1%; margin-right: 0">
+        <div style="overflow-y: scroll; overflow-x: scroll; width: 80%;height: 112vh; opacity: 0.8; border-width: 2px; border-color: black; border-style: solid;">
+            <h1 style="text-align: center; font-size: 180%; font-family:'MedievalSharp'; color: black; margin-top: 0px; margin-bottom: 30px; font-weight: bold; border-bottom-width: 3px;color:white; border-bottom-color: black; border-bottom-style: solid;"> Friends </h1>
+            <div class="chat">
+                <table class="table table-responsive" style="font-family:'MedievalSharp'; color:black; font-size: 135%; font-weight: bold;" cellpadding="7px">
+                    <tbody>
+                        @if (friends != null) { 
+                        foreach (var friend in friends)
+                        {
+                            <tr style="background-image: url('http://localhost:5611/Images/scroll.png'); background-size: 100% 100%;
+	                                                                   background-repeat: no-repeat; background-origin: content-box;">
+                                <td><p><img src="@Url.Content("~/Images/"+friend.Friend.Avatar)" width="40" height="40" /> &nbsp;<span style="color:white">@Html.ActionLink(@friend.FriendId, "Message", "Home", new { id = friend.FriendId }, new { area = "" })</span></p></td>
+                            </tr>
+                            <tr style="height:10px"></tr>
+                        }
+                         }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6" width="100%" height="500px" style="float:left;margin-top: 1%; margin-right: 0;">
+        <h1 style="text-align: center; font-size: 180%; font-family:'MedievalSharp'; color: black; margin-top: 7px; margin-bottom: 30px; font-weight:bold;color:white ;"> Poruke </h1>
+        <div style="overflow-y:scroll;overflow-x:hidden; width: 80%;height:500px; opacity: 0.8;background-image: url('http://localhost:5611/Images/scroll.png'); background-size: 100% 100%;
+	                                background-repeat: no-repeat; background-origin: content-box;" class="chatProba">
+            <div id="@id">
+                @foreach (var mesage in Model)
+                {
+                    if (@mesage.UsernameId == Session["User"].ToString())
+                    {
+                        <div class="round-corner" style="word-wrap: break-word;margin-right:5%;margin-top:2.5%;margin-bottom:2.5%;float:right;background-color:blue;color:white;max-width:45%;text-align:right;">@mesage.Message</div>
+                    }
+                    else
+                    {
+                        <div class="round-corner" style="word-wrap: break-word;margin-left:5%;margin-top:2.5%;margin-bottom:2.5%;float:left;background-color:dimgrey;color:white;max-width:45%">@mesage.Message</div>
+                    }
+                    <div style="width:100%;float:left"></div>
+                }
+
+            </div>
+        </div>
+        <button id="msg" value="@friendId" hidden="hidden"></button>
+        <textarea id="posalji" placeholder="Posalji poruku "></textarea>
+    </div>
+
+
+
+
+
+</div>
+<footer style="height: 10%; font-size: 150%; color: white; text-align: center; margin-top: 5%">
+    War of Mages, Biser2® 2017
+</footer>
+
+<script>
+    $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+</script>
