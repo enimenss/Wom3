@@ -1,0 +1,224 @@
+fileFormatVersion: 2
+guid: 5c287d413c7dabf4bb80a4a88993ca53
+timeCreated: 1495633276
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ClericDuckRight_0
+    21300002: ClericDuckRight_1
+    21300004: ClericDuckRight_2
+    21300006: ClericDuckRight_4
+    21300008: ClericDuckRight_6
+    21300010: ClericDuckRight_8
+    21300012: ClericDuckRight_10
+    21300014: ClericDuckRight_11
+    21300016: ClericDuckRight_13
+    21300018: ClericDuckRight_14
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 300
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ClericDuckRight_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 452
+        width: 92
+        height: 248
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_1
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 452
+        width: 101
+        height: 248
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_2
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 452
+        width: 101
+        height: 221
+      alignment: 9
+      pivot: {x: 0.55612814, y: 0.53591186}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_4
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 455
+        width: 107
+        height: 205
+      alignment: 9
+      pivot: {x: 0.51059645, y: 0.5442454}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_6
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 455
+        width: 112
+        height: 187
+      alignment: 9
+      pivot: {x: 0.4797543, y: 0.5970087}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_8
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 455
+        width: 123
+        height: 155
+      alignment: 9
+      pivot: {x: 0.4723466, y: 0.7048131}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_10
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 455
+        width: 116
+        height: 186
+      alignment: 9
+      pivot: {x: 0.509774, y: 0.5914346}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_11
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 448
+        width: 107
+        height: 205
+      alignment: 9
+      pivot: {x: 0.5000006, y: 0.56636816}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_13
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 448
+        width: 101
+        height: 220
+      alignment: 9
+      pivot: {x: 0.5000012, y: 0.5463823}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ClericDuckRight_14
+      rect:
+        serializedVersion: 2
+        x: 1099
+        y: 448
+        width: 101
+        height: 242
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

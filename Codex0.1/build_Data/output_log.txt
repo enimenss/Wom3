@@ -1,0 +1,243 @@
+Initialize engine version: 5.5.1f1 (88d00a7498cd)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce 820M (ID=0x1140)
+    Vendor:   NVIDIA
+    VRAM:     978 MB
+    Driver:   10.18.10.4276
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+- Completed reload, in  0.448 seconds
+Platform assembly: C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\petar\Desktop\full game\2\Codex0.1 (2)\Codex0.1\build_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 3286x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 2.863581 ms
+joca debilu
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+{"userName":"joca","hashPassword":"debilu"}
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+45954562 joca
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+{"token":"45954562","Username":"joca"}
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Assets.Class.Token
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+http://localhost:5611/api/Users1/GetUser/45954562
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Assets.Class.User
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+http://localhost:5611/api/Users1/GetUserStat/45954562
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+{"Username":"joca","Email":"jocaenimen@elfak.rs","Avatar":"jovan.jpg"}
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Assets.Class.UserStats
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+http://localhost:5611/api/Users1/GetUserItems/45954562
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+{"Wins":23,"Loses":299,"Points":21,"Gold":985,"Total":322}
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Assets.Class.ListOfItems
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+5
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+{"list":[{"ID":6,"Image":"item2","Health":565,"Mana":12,"HealthReg":8989.0,"ManaReg":131.0,"Armor":233.0,"Demage":7878.0,"Price":2332,"Spell":null},{"ID":10,"Image":"item5","Health":2323,"Mana":23232,"HealthReg":23232.0,"ManaReg":233232.0,"Armor":5665.0,"Demage":2323.0,"Price":8956,"Spell":null},{"ID":11,"Image":"item6","Health":566,"Mana":223,"HealthReg":1212.0,"ManaReg":565.0,"Armor":2323.0,"Demage":89.0,"Price":23,"Spell":null},{"ID":7,"Image":"item3","Health":45,"Mana":5656,"HealthReg":8989.0,"ManaReg":7878.0,"Armor":32.0,"Demage":8989.0,"Price":32,"Spell":null},{"ID":4,"Image":"item1","Health":20,"Mana":50,"HealthReg":100.0,"ManaReg":150.0,"Armor":200.0,"Demage":250.0,"Price":300,"Spell":null}]}
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.908340 ms
+start1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+start2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Profile.OnEnable () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 977.
+Total: 1.759077 ms (FindLiveObjects: 0.156435 ms CreateObjectMapping: 0.059549 ms MarkObjects: 1.509063 ms  DeleteObjects: 0.014651 ms)
+
+start1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.301168 ms
+
+Unloading 43 unused Assets to reduce memory usage. Loaded Objects now: 1558.
+Total: 10.377705 ms (FindLiveObjects: 0.282151 ms CreateObjectMapping: 0.146038 ms MarkObjects: 9.871060 ms  DeleteObjects: 0.077036 ms)
+
+MatchMakingClient ListMatches :https://mm.unet.unity3d.com/json/reply/ListMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+MatchMakingClient ListMatches :https://mm.unet.unity3d.com/json/reply/ListMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+MatchMakingClient Create :https://mm.unet.unity3d.com/json/reply/CreateMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+friands
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SetupOtherPlayer
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SetupLocalPlayer
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 447)
+
+enemy
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SetupOtherPlayer
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+change
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+change
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 447)
+
+Log: connection {1} has been disconnected by timeout; address {::ffff:52.28.9.224:9999}
+ServerDisconnected due to error: Timeout
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+change
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+change
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 8f4 -> priority: 1 

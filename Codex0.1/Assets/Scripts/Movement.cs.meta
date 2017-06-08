@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9dfa4775f97dadb48ac9524d351d56b5
+timeCreated: 1489169922
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - player: {fileID: 1191221572661474, guid: 5fc880e7159b8514e83681b28d3e77d9, type: 2}
+  - bulet: {fileID: 1098421565749148, guid: fbb959bc905fde14eb33a8f19706b4c9, type: 2}
+  - granade: {fileID: 1867656825508814, guid: 635cdfd316b935d4fbdbf73578c453e0, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

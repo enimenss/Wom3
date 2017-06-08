@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 25c1bcc55f84d53498b407a84072b243
+timeCreated: 1489321537
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - EmptyHealthTexture: {fileID: 2800000, guid: 9d3660b2778ee664abf81e4e7240ee48,
+      type: 3}
+  - FullHealthTexture: {fileID: 2800000, guid: 765d3fd537933134f9076750ef3cc0bc, type: 3}
+  - EmptyManaTexture: {fileID: 2800000, guid: 5e60285767ef31c4f9abe659d621ce79, type: 3}
+  - FullManaTexture: {fileID: 2800000, guid: 310664b074a9aa94eb723f8b66179d56, type: 3}
+  - player: {fileID: 1191221572661474, guid: 5fc880e7159b8514e83681b28d3e77d9, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
