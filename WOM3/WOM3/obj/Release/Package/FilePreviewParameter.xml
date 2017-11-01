@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default Web Site" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Joca\\Desktop\\WOMFriendsss\\WOM3\\WOM3\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Joca\\Desktop\\WOMFriendsss\\WOM3\\WOM3\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="tempdb-Web.config Connection String" description="tempdb Connection String used in web.config by the application to access the database." value="Data Source=.\test;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Joca\\Desktop\\WOMFriendsss\\WOM3\\WOM3\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='tempdb']/@connectionString" />
+  </parameter>
+</parameters>

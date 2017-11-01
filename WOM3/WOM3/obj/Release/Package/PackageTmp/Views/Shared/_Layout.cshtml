@@ -1,0 +1,705 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    
+    <link rel="stylesheet" type="text/css" href="~/Content/PagedList.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/profilestyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/Path.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/lay.css">
+</head>
+<body class="backgroundslika">
+    <div>
+    <nav class="navbar navbar-inverse" style="margin-top: 20px; border-width:1.5px; border-color:black; border-style:solid; margin-bottom: 1%; background-image: url('http://localhost:5611/Images/navbar.png'); background-size: 100% 100%;background-repeat: no-repeat;padding-bottom:0.5%;background-size: cover;height: 8%">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" style="color: black; margin-top: 10px">War of Mages</a>
+            </div>
+            <div class="navbar-collapse collapse" id="myNavbar"> 
+                <ul class="nav navbar-nav">
+                    @if (!string.Equals(Session["user"], "Administrator"))
+                    {
+
+                    <li >@Html.ActionLink("Profile", "Profiles", "Home", new { id = Session["user"] }, new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Profile" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+                    <li >@Html.ActionLink("Ranking", "result", "Home",new { area = "" }, new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Result" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+
+                    <li >@Html.ActionLink("Item shop", "Shoping", "Home", new { area = "" }, new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Shoping" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+
+                    <li>@Html.ActionLink("Chat", "Message", "Home", new { area = "" }, new { @style = "color: black; margin-top: 10px;" + (string)(@ViewBag.Title == "Message" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })</li>
+
+
+                    <li>@Html.ActionLink("News", "News", "Home", new { id = "News" }, new { @style = "color: black; margin-top: 10px; margin-bottom: 10px;float:left;" + (string)(@ViewBag.Title == "News" ? "border-width: 3px; border-style: groove; border-color: black; border-radius: 5%" : "") })<span style="width:15px;float:right;margin-top: 24px;" id="notify"></span></li>
+                    
+                    @*<li>
+                        <a href="#" style="color: black; margin-top: 10px">
+                            <span style="float:right" id="NumOfMessages"></span>
+                                <span onclick="getMessages()" class="glyphicon glyphicon-envelope"></span>
+                              </a>
+                            <ul id="messagesDrop" style="width:250px;max-height:450px;overflow-x:hidden" class="dropdown-content backgroundslika zaAjaxPoruke"></ul>
+                     </li>*@
+                    <li >
+                        @*<button onclick="getRequests()" style="color: black;font-size:24px; margin-top:10px;"><span class="glyphicon glyphicon-user"></span></button>*@
+                        <a href="#" style="color: black; margin-top: 10px;">
+                            <span style="float:left;" onclick="getRequests()" class="glyphicon glyphicon-user"></span><span style="float:right;" id="notifyFriend"></span></a>
+                        
+                            <ul id="myDropdown"  class="backgroundslika dropdown-content zaAjaxPoruke" style="margin-left:0"></ul>
+
+                      </li>
+                    }
+                    else
+                    {
+                        <li class="@(ViewBag.Title == "PostNews" ? "active" : "")">@Html.ActionLink("PostNews", "PostNews", "Home")</li>
+                    }
+                </ul>
+                
+                    <ul class="nav navbar-nav navbar-right">
+                                                @if (Session["user"] != null)
+                                                {
+                                                    <li>
+                                                        <a href="#" style="color: black; margin-top: 10px">
+                                                            <span style="float:right" id="NumOfMessages"></span>
+                                                            <span onclick="getMessages()" class="glyphicon glyphicon-envelope"></span>
+                                                        </a>
+                                                        <ul id="messagesDrop" style="width:250px;max-height:450px;overflow-x:hidden" class="dropdown-content backgroundslika zaAjaxPoruke"></ul>
+                                                    </li>
+                                                    <li><a href="#" onclick="skini()" style="color: black; margin-top: 10px;" align="right">Download game  <span class="glyphicon glyphicon-download-alt"></span></a></li>
+                                                    <li>
+                                <a href="#" onclick="OdjaviSe()"  style="color: black; margin-top: 10px" >Log-Out&nbsp;&nbsp;<span class="glyphicon glyphicon-log-out"></span></a>
+                                @*<a class="navbar-link" onclick="document.getElementById('odjavljivanje').submit()">Log-Out&nbsp;&nbsp;<span class="glyphicon glyphicon-log-out"></span></a>*@
+                            </li>
+                        }
+                    </ul>
+              
+
+            </div>
+        </div>
+    </nav>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+        <script>
+            var ServerAddress = "@Request.Url.Scheme" + "://" + "@Request.Url.Authority" + "@Request.ApplicationPath.TrimEnd('/')" + "/";
+        </script>
+    <script src="~/Scripts/MyScript.js"></script>
+    <script type="text/javascript" src="~/Scripts/canvasjs.min.js"></script> 
+        <script src="~/Scripts/javascript.js"></script>
+        
+        <script>
+            var NumOfMessages = 0;
+        </script>
+        <style>
+            .circleOff {
+                color: white;
+                background-color: #555;
+            }
+        </style>
+    <div class="body-content">
+   
+        @RenderBody()
+        <hr />
+
+        <footer style="height: 10%; font-size: 150%; color: white; text-align: center; margin-top: 5%">
+            War of Mages, Biser2® 2017
+        </footer>
+    </div>
+        </div>
+
+    <style>
+
+        .zaAjaxPoruke {
+            max-height: 450px;
+            overflow-x:hidden;
+        }
+    </style>
+
+
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+   
+    <script src="~/signalr/hubs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+   
+    <script> 
+            console.log(ServerAddress);
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            url: '/Home/NewsAndRequests',
+            success: function (data) {
+                if (data) {
+                    if (data.News > 0) {
+                        notification(data.News);
+                    }
+                    if (data.NumRequests > 0) {
+
+                        notifyFriendRequest(data.NumRequests);
+                    }
+                    if (data.NumOfMessages > 0) {
+                        NumOfMessages = data.NumOfMessages;
+                        $('#NumOfMessages').empty();
+                        $('#NumOfMessages').append("<span class='badge badge-notify'>" + data.NumOfMessages + "</span>");
+                    }
+                }
+            }
+            });
+
+
+        $(function () {
+
+
+            var wom = $.connection.WomHub;
+             @{Random rnd = new Random(Environment.TickCount); }
+
+                 wom.client.News = function (naslov, poruka, datum, number) {
+                    @{
+                        int num1 = rnd.Next(Environment.TickCount);
+                        int num = num1 % 4 + 1;
+                     }
+
+                     notification(number);
+                     $('#vesti').prepend("<div class='news-item'><div class='row'><div class='col-md-4' style='padding-top: 2%'><img alt='Bootstrap Image Preview' src=" + ServerAddress+"mages/mage0"+@num+".png width='200' height='200' style='border-width: 2px; border-color: black; border-style: solid; border-radius: 5%;' /></div><div class='col-md-8'><h3 class='news-title' style='font-weight: 900'>" + naslov + "</h3><p style='margin-left: 8%'>" + poruka + "</p><p style='margin-left: 8%'>" + datum + "</p><div class='news-read-more'><button>Read more</button></div></div></div></div> ")
+                 };
+
+
+                 wom.client.primiPoruku = function (message, kome, datum) {
+
+                     var is = $('#posalji').hasClass("fromChat");
+                     if (!is) {
+                         $.ajax({
+                             type: 'POST',
+                             dataType: 'json',
+                             data: { 'friend': kome },
+                             cache: false,
+                             url: '/Home/IsSeen',
+                             success: function (data) {
+                                 if (data) {
+                                     NumOfMessages = NumOfMessages + 1;
+                                     $('#NumOfMessages').empty();
+                                     $('#NumOfMessages').append("<span class='badge badge-notify'>" + NumOfMessages + "</span>");
+                                 }
+                             }
+                         });
+                         return;
+                     }
+                     var upisiPoruku = $("#" + kome + 'm');
+
+                     var dete = upisiPoruku.children().last();
+                     var predhodnik = dete.prev();
+                     // var count = $(predhodnik[0]).children().length;
+                     var is = $(predhodnik[0]).hasClass("recv");
+                     var skloni = $(predhodnik[0]).children().first();
+                     if (is) {
+                         skloni.remove();
+                         predhodnik.prepend("<span style='float:left;margin-right:3%;width:38px;height:1px'></span>");
+                     }
+                     else {
+
+                         var okvirZaPorukuiSeen = $(predhodnik[0]).children().last();
+                         var malaSlicka = okvirZaPorukuiSeen.children().last();
+                         var seen = malaSlicka.hasClass("myseen");
+                         //if (seen) {
+                         //    malaSlicka.remove();
+                         //}
+
+                     }
+
+                     upisiPoruku.append("<div class='recv' style='margin-left:5%;margin-top:0.5%;margin-bottom:0.5%;float:left;width:55%'>" +
+                         "<img src='" + ServerAddress +"Images/" + friendObj.Avatar + "' class='slicka' style='float:left;margin-right:3%' width='38' height='38' />" +
+                         "<span class='round-corner tooltipR' style='float:left;max-width:70%;word-wrap: break-word;background-color:dimgrey;color:white;font-size:20px'>" + htmlEncode(message) + " <span class='tooltiptextR'>" + datum + "</span></span></div><div style='width:100%;float:left'></div>");
+                     if (document.getElementsByClassName('chatProba').length != 0) {
+                         $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+                     }
+
+                     $.ajax({
+                         type: 'POST',
+                         dataType: 'json',
+                         data: { 'friend': kome },
+                         cache: false,
+                         url: '/Home/IsSeen',
+                         success: function (data) {
+                             if (data) {
+                                 NumOfMessages = NumOfMessages + 1;
+                                 $('#NumOfMessages').empty();
+                                 $('#NumOfMessages').append("<span class='badge badge-notify'>" + NumOfMessages + "</span>");
+                             }
+                         }
+                     });
+                 }
+
+
+                 wom.client.typping = function (kome) {
+                     var is = $('#posalji').hasClass("fromChat");
+                     if (!is) {
+                         return;
+                     }
+                     var upisiPoruku = $("#" + kome + 'm');
+                     if (upisiPoruku.length <= 0) {
+                         console.log("ne postoji");
+                         return;
+                     }
+
+                     var dete = upisiPoruku.children().last();
+                     var predhodnik = dete.prev();
+                     // var count = $(predhodnik[0]).children().length;
+                     var is = $(predhodnik[0]).hasClass("recv");
+                     var skloni = $(predhodnik[0]).children().first();
+                     if (is) {
+                         skloni.remove();
+                         predhodnik.prepend("<span style='float:left;margin-right:3%;width:38px;height:1px'></span>");
+                     }
+                    
+
+                     upisiPoruku.append("<div id='typping' class='recv' style='margin-left:5%;margin-top:0.5%;margin-bottom:0.5%;float:left;width:55%'>" +
+                         "<img src='" + ServerAddress +"Images/" + friendObj.Avatar + "' class='slicka' style='float:left;margin-right:3%' width='38' height='38' />" +
+                         "<span id='type' class='round-corner tooltipR' style='float:left;max-width:70%;word-wrap: break-word;background-color:dimgrey;color:white;font-size:20px'></span></div><div style='width:100%;float:left'></div>");
+                     RunTypingAnimation();
+                     if (document.getElementsByClassName('chatProba').length != 0) {
+                         $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+                     }
+
+                 }
+
+                 wom.client.untypping = function (kome) {
+                     
+                        console.log("pozvan");
+                         var is = $('#posalji').hasClass("fromChat");
+                         if (!is) {
+                             return;
+                         }
+                         var upisiPoruku = $("#" + kome + 'm');
+                         if (upisiPoruku.length <= 0) {
+                             console.log("ne postoji");
+                             return;
+                         }
+                         StopTypingAnimation();
+                         $("#typping").remove();
+                         var dete = upisiPoruku.children().last();
+                         var razmak = dete.prev();
+                         razmak.remove();
+                         var predhodnik = dete.prev();
+                         // var count = $(predhodnik[0]).children().length;
+                         var is = $(predhodnik[0]).hasClass("recv");
+                         console.log(predhodnik);
+                         console.log(predhodnik[0]);
+                         var skloni = $(predhodnik[0]).children().first();
+                         if (is) {
+                             console.log(predhodnik);
+                             skloni.remove();
+                             predhodnik.prepend("<img src= '" + ServerAddress +"Images/" + friendObj.Avatar + "' class='slicka' style= 'float:left;margin-right:3%' width= '38' height= '38' />");
+                         }
+
+                         //StopTypingAnimation();
+                        
+                         if (document.getElementsByClassName('chatProba').length != 0) {
+                             $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+                         }
+
+            
+                 }
+
+                 wom.client.mojaPoruka = function (message, sebi, datum) {
+
+                     var is = $('#posalji').hasClass("fromChat");
+                     if (!is) {
+                         return;
+                     }
+                     var upisiPoruku = $("#" + sebi + 'm');
+                     var dete = upisiPoruku.children().last();
+                     var predhodnik = dete.prev();
+                     // var count = $(predhodnik[0]).children().length;
+                     var is = $(predhodnik[0]).hasClass("send");
+                     var skloni = $(predhodnik[0]).children().first();
+
+
+                     var okvirZaPorukuiSeen = $(predhodnik[0]).children().last();
+                     var malaSlicka = okvirZaPorukuiSeen.children().last();
+
+                     var seen = malaSlicka.hasClass("myseen");
+
+                     if (is) {
+                         skloni.remove();
+                         predhodnik.prepend("<span style='float:right;margin-left:3%;width:38px;height:1px'></span>");
+                         console.log(malaSlicka[0]);
+                         console.log(seen);
+                         //if (seen) {
+                         //    malaSlicka.remove();
+                         //}
+                     }
+                     if (message == ':D') {
+                         message ='&#x26FD';
+                     }
+                     upisiPoruku.append("<div value='0' class='send' style='margin-right:5%;margin-top:0.5%;margin-bottom:0.5%;float:right;width:55%'>" +
+                         "<img src='" + ServerAddress +"Images/" + Me.Avatar + "' class='slicka' style='float:right;margin-left:3%' width='38' height='38' />" +
+                         "<div style='width:70%;float:right'>" +
+                         "<div class='round-corner send tooltipR' style='float:right;word-wrap:break-word;background-color:blue;color:white;max-width:100%;text-align:right;font-size:20px'>" + message + "<span class='tooltiptextR'>" + datum + "</span></div>" +
+                         "</div></div><div style='width:100%;float:left'></div>");
+                     if (document.getElementsByClassName('chatProba').length != 0) {
+                         $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+                     }
+                 }
+
+                 wom.client.onlineSam = function (name,avatar,inGame) {
+
+                     var update = $("#" + name);
+
+                     console.log(update);
+                     update.empty();
+                     var is = update.hasClass("fromChat");
+                     if (is) {
+                         update.append("<div style='float:left;margin-top:80%' class='circle'> </div>");
+                     }
+                     else
+                     {
+                         update.append("<div style='float:left;margin-left:5px' class='circle'></div>");
+                         console.log(update);
+                     }
+
+                     if (inGame) {
+                         $("#" + name + "dz").append("<img style='margin-bottom:10px' src='" + ServerAddress +"Images/dzojstik.png' width='25' height='25' />");
+                     }
+                 }
+
+                 wom.client.malaSlicka = function (name) {
+
+                     var is = $('#posalji').hasClass("fromChat");
+                     if (!is) {
+
+                         return;
+                     }
+                     console.log("use");
+                     var upisiSeen = $("#" + name + 'm');
+                     if (upisiSeen.length <= 0) {
+                         console.log("ne postoji");
+                         return;
+                     }
+                     var dete = upisiSeen.children().last();
+                     var predhodnik = dete.prev();  //treba se tu setuje i value na 1 ako zatreba nekad
+                     // var count = $(predhodnik[0]).children().length;
+                     var is = $(predhodnik[0]).hasClass("send");
+
+
+                     var okvirZaPorukuiSeen = $(predhodnik[0]).children().last();
+                     var malaSlicka = okvirZaPorukuiSeen.children().last();
+
+                     var seen = malaSlicka.hasClass("myseen");
+
+                     if (is && !seen) {
+                         var izbrisiSeen = $(".myseen");
+                         izbrisiSeen.remove();
+                         console.log("aaaaa");
+                         okvirZaPorukuiSeen.append("<p class='myseen' style='float:right;width:100%'><span class='tooltipS' style='float:right'><img src='" + ServerAddress +"Images/" + friendObj.Avatar + "' class='slicka' style='float:right' width='24' height='24' /><span class='tooltiptextS'>Seen !!!</span></span></p>");
+                         if (document.getElementsByClassName('chatProba').length != 0) {
+                             $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");
+                         }
+                     }
+                 }
+
+                 wom.client.offSam = function (name, avatar, inGame, count) {
+                     if (count > 1) {
+                         if (inGame) {
+                             $("#" + name + "dz").empty();
+                         }
+                         return;
+                     }
+                     var update = $("#" + name);
+                     update.empty();
+                     var is = update.hasClass("fromChat");
+                     if (is) {
+                         update.append("<div style='float:left;margin-top:20%'class='circleOff'></div>");
+                     }
+                     else {
+                         update.append("<div style='float:left;margin-left:5px' class='circleOff'></div>");
+                     }
+
+                     if (inGame) {
+                         $("#" + name + "dz").empty();
+                     }
+                 }
+
+
+
+                 $('#seen').click(function () {
+                     console.log("seen");
+                     $.ajax({
+                         type: 'POST',
+                         dataType: 'json',
+                         data: { 'friend': friendObj.Username },
+                         cache: false,
+                         url: '/Home/IsAllSeen',
+                         success: function (data) {
+                             if (data) {
+                                 NumOfMessages = NumOfMessages - 1;
+                                 $('#NumOfMessages').empty();
+                                 if (NumOfMessages > 0) {
+                                     $('#NumOfMessages').append("<span class='badge badge-notify'>" + NumOfMessages + "</span>");
+                                 }
+                             }
+                         }
+                     });
+
+                   
+                     //var cale = $("#" + friendObj.Username + 'm');
+                     //var dete = cale.children().last();
+                     //var predhodnik = dete.prev();
+                     //var is = $(predhodnik[0]).hasClass("recv");
+                     // if (is) {
+                     //var val = (predhodnik[0]).getAttribute('value');
+                     //if (val == 1) {
+                     //    return;
+                     //}
+                     wom.server.seen(friendObj.Username);
+                     // }
+
+                 });
+
+                 onFocus = function () {
+                     wom.server.typping($('#msg').val());
+                 }
+
+                onBlur = function(){
+                    wom.server.untypping($('#msg').val());
+                 }
+
+                 $('#test').click(function () {
+                     wom.server.proba();
+                 });
+
+                 wom.client.Prihvacen = function (username,avatar) {
+                $('#reqMess').empty();
+                $('#reqMess').append("<button id='msg' onclick='posaljiP()' value='" + username + "' class='btn btn-primary btn-success'>Send Message &nbsp;<span class='glyphicon glyphicon-user'></span></button>");
+                $('#reqMess').append("<textarea id='posalji' placeholder='Posalji poruku ' class='dropdown-content fromProfile'></textarea> <strong id='isSend'></strong>");
+                     posaljiP = function () {
+                         document.getElementById("posalji").classList.toggle("show");
+                }
+
+                $('#posalji').keypress(function (e) {
+                         var key = e.which;
+                         if (key == 13)
+                         {
+                             wom.server.posaljiPoruku($('#posalji').val(), $('#msg').val());
+                             $('#posalji').val('').blur();        
+                             $('#posalji').val('').focus();
+                            
+
+                         var obavestenje = document.getElementById("isSend");
+                        var is = $('#posalji').hasClass("fromProfile");
+                        if (is) {
+                            obavestenje.innerHTML = "Poruka poslata"
+                            document.getElementById("posalji").classList.toggle("show");
+                        }
+
+                         }
+                     });
+
+                @{
+                    var my = Session["user"].ToString();
+
+                     }
+
+                     var noviPrijatelj = $('#friends');
+                     noviPrijatelj.append(" <tr id='" + username + "'> <td><div style='float:left' class='circleOff'></div></td><td style='float:left'><img src='" + ServerAddress + "Images/" + avatar + "' width='25' height='25' />&nbsp;</td> <td style='float:left'><strong><a href='"+ ServerAddress +"Home/Profiles/" + username + "' >" + username + "</a>&nbsp;</strong></td>");
+
+                 }
+
+                 wom.client.Odbijen = function (username) {
+                $('#reqMess').empty();
+                $('#reqMess').append("<button id='request'  value='" + username + "' class='posalji btn btn-primary btn-primary'>Send Request &nbsp;<span class='glyphicon glyphicon-user'></span></button>");
+                $('.posalji').click(function () {
+                         wom.server.friendRequest('@Session["user"].ToString()', $(this).val())
+                    var x = $('#reqMess');
+                         x.empty();
+                         x.append("<span><strong>Zahtev za Prijateljstvo poslat</strong></span>");
+                     });
+                 }
+
+            $('#posalji').keypress(function (e) {
+                     var key = e.which;
+                     if (key == 13)
+                     {
+                         wom.server.untypping($('#msg').val());
+                        
+                         wom.server.posaljiPoruku($('#posalji').val(), $('#msg').val());
+                         $('#posalji').val('');
+                         wom.server.typping($('#msg').val());
+                    var obavestenje = document.getElementById("isSend");
+                    var is = $('#posalji').hasClass("fromProfile");
+                    if (is) {
+                        obavestenje.innerHTML = "Poruka poslata"
+                        document.getElementById("posalji").classList.toggle("show");
+                    }
+                     }
+
+                 });
+
+
+
+
+            wom.client.Notify = function (num) {
+                $('#notifyFriend').empty();
+                     if (num > 0) {
+                         notifyFriendRequest(num);
+                     }
+                 }
+
+
+            $.connection.hub.qs = { "Name": '@Session["user"].ToString()', "Source": 'sajt' };
+           
+            $.connection.hub.start().done(function () {
+                $('#post').click(function () {
+
+                         wom.server.send($('#naslov').val(),$('#poruka').val());
+
+
+                     }
+
+                );
+
+                //$("#odjavljivanje").submit(function (event) {
+                //     console.log("uso");
+                //     chat.server.offlineSam();
+                // });
+
+                OdjaviSe = function () {
+                    wom.server.offlineSam();
+
+                    location.href = '@Url.Content("~/Home/logout")';
+                   }
+
+                $('.posalji').click(function () {
+                     wom.server.friendRequest('@Session["user"].ToString()', $(this).val())
+                    var x = $('#reqMess');
+                     x.empty();
+                     x.append("<span><strong>Zahtev za Prijateljstvo poslat</strong></span>")
+
+
+                });
+
+
+                getMessages = function () {
+                    console.log("hah");
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        cache: false,
+                        url: '/Home/getM',
+                        success: function (obj) {
+
+                            var dropdown = $('#messagesDrop');
+
+
+                            dropdown.empty();
+                            if (jQuery.isEmptyObject(obj)) {
+                                dropdown.prepend("<li><strong style='collor:white'>NemaPoruka</strong></li>")
+
+                            }
+
+                            document.getElementById("messagesDrop").classList.toggle("show");
+                            $.each(obj, function (i, f) {
+                                console.log(f.Sender);
+                                if (f.IsSeen == 1) {
+                                    dropdown.append("<li style='margin-top: 0px; background-image:url(" + ServerAddress + "Images/scroll.png); background-size: 100% 100%;background-repeat: no-repeat; background-origin: content-box;'><a href='#' onclick=alllSeen('" + f.Sender + "') ><p><div style='height:100%;float:left;margin-right:3%'><img style='float:left;border-radius: 50%' src='" + ServerAddress +"Images/" + f.Jpg + "' width='60' height='60' /></div>&nbsp;<span style='float:left' ><strong style='font-size:20px'>" + f.Sender + "&nbsp;&nbsp;</strong></span>" + ((f.Online) ? "<span style='float:left;margin-top:2.2%' class='circle' ></span> " : "") +"</p><p style='font-weight:400;white-space: nowrap;overflow:hidden;text-overflow:ellipsis'>" + f.Message + "</p></a><p style='color:#808080;float:right'>" + f.Datum + "</p></li>");
+                                }
+                                else {
+                                    dropdown.append("<li style='margin-top: 0px; background-image:url(" + ServerAddress +"Images/scroll.png); background-size: 100% 100%;background-repeat: no-repeat; background-origin: content-box;'><a href='#' onclick=alllSeen('" + f.Sender + "') ><p><div style='height:100%;float:left;margin-right:3%'><img style='float:left;border-radius: 50%' src='" + ServerAddress +"Images/" + f.Jpg + "' width='60' height='60' /></div>&nbsp;<span style='float:left'><strong style='font-size:20px'>" + f.Sender + "&nbsp;(" + f.NumOfNotSeen + ")</strong></span>" + ((f.Online) ? "<span style='float:left;margin-top:2.2%;margin-left:1%' class='circle' ></span> " : "") +"</p><p style='font-weight:400;white-space: nowrap;overflow:hidden;text-overflow:ellipsis'>" + f.Message + "</p></a><p style='color:#808080;float:right'>" + f.Datum + "</p></li>");
+                                }
+                                dropdown.append("<li height='1'></li>")
+
+                            });
+                        }
+                    });
+                }
+
+                alllSeen = function (Sender) {
+                    console.log(Sender);
+                     wom.server.setAllSeen(Sender);
+                     window.location.href = ServerAddress +"Home/Message/" + Sender;
+                }
+
+
+                 skini = function () {
+                     $.ajax({
+                         type:'get',
+                         dataType: 'rar',
+                         cache: false,
+                         url: '/Game/Codex.rar',
+                         success: function (obj) {
+                             var file = new Blob([obj], {
+                                 type: 'application/zip'
+                             });
+                             window.location = URL.createObjectURL(url);
+
+
+                         }
+                     })
+
+                 }
+
+
+
+
+                 getRequests = function () {
+                    $.ajax({
+                     type: 'POST',
+                        dataType: 'json',
+                        cache: false,
+                        url: '/Home/getRequests',
+                        success: function (obj) {
+
+                             var dropdown = $('#myDropdown');
+                             dropdown.empty();
+                             if (jQuery.isEmptyObject(obj)) {
+                                 dropdown.prepend("<tr><td><strong style='color:white'>Nemate zahteva za prijateljstvo</strong></td></tr>");
+                             }
+                            $.each(obj, function (i, f) {
+                                 console.log(f);
+                                 //dropdown.prepend("<tr style='background-image:url(" + ServerAddress +"Images/scroll.png); background-size: 100% 100%;background-repeat: no-repeat; background-origin: content-box;'><td ><a style='margin-bottom:20%' href=" + "http://localhost:5611/Home/Profiles/" + f.Username + "><img src=" + "http://localhost:5611/Images/" + f['Avatar'] + " width='20' height='20' />&nbsp;<strong>" + f.Username + "</strong></a></td>&nbsp;<td style='text-align: center'><button  class='btn btn-sm btn-success' style='margin-top:22%'  value='" + f.Username + "' id='" + f.Username + "a'>Accept&nbsp:<span class='glyphicon glyphicon-user'></span></button></td><td>&nbsp;<button style='margin-top:22%' class='btn btn-sm btn-danger' value='" + f.Username + "' id='" + f.Username + "d'>Deny&nbsp;<span class='glyphicon glyphicon-trash'></span></button></td></tr>")
+                                 dropdown.append("<li style='margin-top: 0px; background-image:url(" + ServerAddress + "Images/scroll.png); background-size: 100% 100%;background-repeat: no-repeat; background-origin: content-box;'><a href='" + ServerAddress + "Home/Profiles/" + f.Username + "' ><div style='height:100%;float:left;margin-right:3%'><img style='float:left;border-radius: 50%' src='" + ServerAddress +"Images/" + f.Avatar + "' width='60' height='60' /></div>&nbsp;<span style='float:left' ><strong style='font-size:20px'>" + f.Username + "&nbsp;&nbsp;</strong></span></a><p style='font-weight:400;white-space: nowrap;overflow:hidden;text-overflow:ellipsis'><button  class='btn btn-sm btn-success' style='margin-bottom:4%;border-radius:15px'  value='" + f.Username + "' id='" + f.Username + "a'>Accept&nbsp:<span class='glyphicon glyphicon-user'></span></button>&nbsp;<button style='margin-bottom:4%;border-radius:15px' class='btn btn-sm btn-danger' value='" + f.Username + "' id='" + f.Username + "d'>Deny&nbsp;<span class='glyphicon glyphicon-trash'></span></button></p><p style='color:#808080;float:right'>" + f.Datum + "</p></li>");
+                                 dropdown.append("<li height='1'></li>");
+                                document.getElementById(f.Username + "a").onclick = function () {
+                                     var cale = this.parentElement.parentElement;
+                                     var proba = this.parentElement.parentElement.parentElement;
+                                     proba.removeChild(cale);
+                                     wom.server.af(f.Username);
+
+                                 }
+                                 document.getElementById(f.Username + "d").onclick = function () {
+                                     var cale = this.parentElement.parentElement;
+                                     var proba = this.parentElement.parentElement.parentElement;
+                                     proba.removeChild(cale);
+                                     wom.server.df(f.Username); //glup sredi ovo
+
+                                 }
+
+                             });
+
+                             document.getElementById("myDropdown").classList.toggle("show");
+                         }
+                     });
+                 }
+
+                 });
+        });
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+   
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+

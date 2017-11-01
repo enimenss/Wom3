@@ -1,0 +1,105 @@
+﻿@model WOM3.Models.User
+
+@{
+
+    Layout =null;
+    ViewBag.Title = "Register";
+}
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<style>
+    label > input { /* HIDE RADIO */
+        visibility: hidden; /* Makes input not-clickable */
+        position: absolute; /* Remove input from document flow */
+    }
+    label img{
+        height: 50px;
+    }
+
+        label > input + img { /* IMAGE STYLES */
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        label > input:checked + img { /* (RADIO CHECKED) IMAGE STYLES */
+            border: 2px solid #f00;
+        }
+
+        img{
+            height:50px;
+        }
+</style>
+
+
+
+<h2>Register</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                @ViewBag.Error
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.Email)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pass, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Avatar, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                <div class="chose-thumb" style="overflow-x: scroll;
+                     width:200px;
+                     height:70px;
+                     overflow-y:hidden;">
+                    <div style="height:50px;
+                     width:280px;">
+                    <label><input type="radio" name="Avatar" value="aca.jpg"><img src="/images/aca.jpg" /></label>
+                    <label><input type="radio" name="Avatar" value="dusan.jpg"><img src="/images/dusan.jpg" /></label>
+                    <label><input type="radio" name="Avatar" value="pera.jpg"><img src="/images/pera.jpg" /></label>
+                        <label><input type="radio" name="Avatar" value="jovan.jpg"><img src="/images/jovan.jpg" /></label>
+                        <label><input type="radio" name="Avatar" value="ursa.jpg"><img src="/images/ursa.jpg" /></label>
+                    </div>
+                </div>                
+                <span class="field-validation-valid text-danger" data-valmsg-for="Avatar" data-valmsg-replace="true"></span>
+          
+                @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
+            </div>
+        </div>
+  
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-plus"></span> Register</button>
+            </div>
+        </div>
+    </div>
+
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+
+

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WOM3.Models.Messages>
+@using WOM3.Models;
+
+@{
+    ViewBag.Title = "Message";
+}
+
+@{
+    var friends = (List<Friends>)TempData["friends"];
+    string friendId = (string)TempData["Friend"];
+    string id = (string)TempData["Friend"] + "m";
+
+}
+
+<style>
+    .friendss{
+    border: 1px solid #ccc;
+    width: 300px;
+    height: 500px;
+    padding: 10px;
+    overflow-y:scroll;
+    background-color:lightcoral;
+     word-wrap: break-word; 
+
+     text-overflow: ellipsis;
+
+     }
+</style>
+
+<br />
+<br />
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+ 
+<ul class="friendss" > 
+    @foreach (var friend in friends)
+    {
+        //mora se poravi novi css
+        <li style="background-color:darkblue">
+        
+            <p><img src="@Url.Content("~/Images/"+friend.Friend.Avatar)" width="40" height="40" /> &nbsp;<span style="color:white">@Html.ActionLink(@friend.FriendId, "Message", "Home", new { id = friend.FriendId }, new { area = "" })</span></p>
+        </li>
+    }
+</ul>
+
+
+           </div>
+        <div class="col-md-8">
+            <ul id="@id" class="zaPoruke">
+                @foreach (var mesage in Model)
+                {
+                    if (@mesage.UsernameId == Session["User"].ToString())
+                    {
+                    <li><p style="background-color:darkblue"><strong><span style="color:white;float:right">@mesage.Message </span> <br /> <span style="color:#808080;"> @mesage.Datum</span></strong></p></li>
+                    }
+                    else
+                    {
+                        <li><p style="background-color:darkred"><strong><span style="color:white;float:left">@mesage.Message </span> <br /> <span style="color:#808080;"> @mesage.Datum</span></strong></p></li>
+
+                    }
+
+                }
+                
+            </ul>
+                <button id="msg" value="@friendId" hidden="hidden"></button>
+                <textarea id="posalji" placeholder="Posalji poruku "></textarea>
+</div>
+        </div>
+    </div>
+<script>
+    $(".zaPoruke").animate({ scrollTop: document.getElementsByClassName('zaPoruke')[0].scrollHeight }, "fast");
+</script>

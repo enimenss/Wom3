@@ -1,0 +1,161 @@
+﻿
+@model PagedList.IPagedList<WOM3.Models.UserStats>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Result";
+}
+
+@{ 
+    IQueryable<WOM3.Models.UserStats> stats = (IQueryable <WOM3.Models.UserStats>)TempData["stats"];
+}
+
+@{
+    if (ViewBag.FriendRequests > 0)
+    {
+        <script>
+            notifyFriendRequest(@ViewBag.FriendRequests)
+        </script>
+    }
+}
+
+@if (ViewBag.News > 0)
+{
+    <script>
+        notification(@ViewBag.News);
+    </script>
+}
+
+
+
+<h2>result</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+<table class="table">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Total
+        </th>
+        <th>
+            Wins
+        </th>
+        <th>
+            Loses
+        </th>
+        <th>
+            Points
+        </th>
+        <th>
+            Gold
+        </th>
+
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+      <tr>
+        <td>
+            <img src="@Url.Content("~/Images/"+item.User.Avatar)" width="30" height="30" />  @Html.ActionLink(item.Username, "Profiles", "Home", new { id = item.Username }, new { area = "" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wins)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Loses)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Points)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gold)
+        </td>
+        
+    </tr>
+        }
+    }
+
+</table>
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("result",
+    new { sort = ViewBag.sort, page, area = "", prevSearch = ViewBag.Search }))
+
+
+    </div>
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                <th>
+                    @using (Html.BeginForm("result", "Home", FormMethod.Get))
+                    {
+                    <span class="glyphicon glyphicon-sort-by-order"></span>
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="Total" @(ViewBag.sort == "Total" ? "selected" : "")>Total</option>
+                        <option value="Win" @(ViewBag.sort == "Win" ? "selected" : "")>Win</option>
+                        <option value="Lose" @(ViewBag.sort == "Lose" ? "selected" : "")>Lose</option>
+                    </select>
+                }
+            </th>
+            <th>
+                @using (Html.BeginForm("result", "Home", FormMethod.Get))
+                {
+                
+                        @Html.TextBox("SearchString")
+                        <button type="submit" class="btn btn-md btn-info"><span class="glyphicon glyphicon-search"></span></button>
+                
+                }
+            </th>
+                    </tr>
+            </table>
+            <div id="chartContainer" style="height: 300px; width:500px;"></div>
+        </div>
+    </div>
+    </div>
+<script>
+    var chart= MakeChart();
+    </script>
+@if (ViewBag.sort == "Total")
+    {
+foreach (var itemm in stats)
+{
+        <script>
+            chart.options.data[0].dataPoints.push({ y: @itemm.Total, legendText: '@itemm.Username', label: '@itemm.Username' });
+           </script>
+}
+
+}
+@if (ViewBag.sort == "Win")
+{
+    foreach (var itemm in stats)
+    {
+    <script>
+       chart.options.data[0].dataPoints.push({ y: @itemm.Wins, legendText:'@itemm.Username', label: '@itemm.Username' });
+    </script>
+    }
+}
+
+@if (ViewBag.sort == "Lose")
+{
+    foreach (var itemm in stats)
+    {
+        <script>
+       chart.options.data[0].dataPoints.push({ y: @itemm.Loses, legendText:'@itemm.Username', label: '@itemm.Username' });
+        </script>
+    }
+}
+<script>
+    start();
+</script>
+
+

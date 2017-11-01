@@ -1,0 +1,38 @@
+﻿
+<!DOCTYPE html>
+
+@{ 
+    Layout = "~/Views/Shared/Proba.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>kod</title>
+</head>
+<body>
+    <div> 
+@using (Html.BeginForm("kod", "Forget", FormMethod.Post))
+{
+        <table>
+            <tr>
+               <td>
+                   <strong style="background-color:azure"> @ViewBag.Message</strong>
+               </td>
+            </tr>
+            <tr>
+                <td><strong style="background-color:azure">Unesi kod:</strong></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="kod" />&nbsp; <button type="submit" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-ok"></span> </button>
+                </td>
+            </tr>
+                
+
+
+        </table>
+}
+    </div>
+</body>
+</html>

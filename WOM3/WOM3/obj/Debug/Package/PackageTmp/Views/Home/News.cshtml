@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WOM3.Models.News>
+
+@{
+    ViewBag.Title = "News";
+}
+
+@{ 
+    if (ViewBag.FriendRequests > 0)
+    {
+        <script>
+            notifyFriendRequest(@ViewBag.FriendRequests)
+        </script>
+    }
+}
+
+<h2>News</h2>
+
+
+<ul id="mesage" class="messages">
+    @foreach(var news in Model)
+    {
+        <li><p style="background-color:darkred"><strong><span style="color:white">@news.Info </span> <br /> <span style="color:#808080"> @news.Datum</span></strong></p></li>
+    }
+</ul>
+

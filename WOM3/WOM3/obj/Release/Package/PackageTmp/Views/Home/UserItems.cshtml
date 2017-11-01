@@ -1,0 +1,106 @@
+﻿@model PagedList.IPagedList<WOM3.Models.UserItems>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    List<WOM3.Models.UserItems> lista = Model.ToList();
+    List<WOM3.Models.ItemZaPrikaz> zaPrikaz = new List<WOM3.Models.ItemZaPrikaz>();
+    foreach (var item in lista)
+    {
+        WOM3.Models.ItemZaPrikaz i = new WOM3.Models.ItemZaPrikaz() { ID = item.Item.ID, Armor = item.Item.Armor, Demage = item.Item.Demage, Health = item.Item.Health, HealthReg = item.Item.HealthReg, Image = item.Item.Image, Mana = item.Item.Mana, ManaReg = item.Item.ManaReg, Price = item.Item.Price };
+        zaPrikaz.Add(i); //skroz pormena
+
+
+    }
+}
+    
+
+
+    <div class="row inventory">
+        @foreach (var item in Model)
+        { 
+
+
+        <div class="col-md-3 col-xs-6 item-container">
+            <div class="item">
+                <button id="myBtn" item-id="@item.Item.ID" data-toggle="modal" data-target="#itemModal" style="background-image: url(@Url.Content("~/Images/"+item.Item.Image+".PNG"));"></button>
+
+            </div>
+        </div>
+        }
+
+        @for (int i = 0; i < 12 - Model.Count; i++)
+        {
+            <div class="col-md-3 col-xs-6 item-container">
+               
+            </div>
+
+        }
+
+      
+    </div>
+
+
+
+<div class="modal modal-scroll fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="align-center item-icon"  style="margin-bottom: 4%">
+                <div>
+                    <h4 class="modal-title item-name" style="text-align: center; margin-bottom: 0%; font-weight: 900">Modal title</h4>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center">
+                <hr>
+                Demage: <span class="item-dmg"></span>
+                <br>
+                Mana: <span class="item-mana"></span>
+                <br />
+                 Health: <span class="item-health"></span>
+                <br>
+                Armor: <span class="item-armor"></span>
+                <br>
+                <hr />
+                    </div>
+            </div>
+            <div class="modal-footer">
+                 @using (Html.BeginForm("Profiles", "Home", FormMethod.Post))
+                 {
+                <button type="button" style="margin-right: 45%" data-dismiss="modal">Close</button>
+                if (Session["user"].ToString() == ViewBag.Username)
+                {
+                <button type="submit"> Sell item </button>
+                <input type="hidden" class="item-id" name="id_Itema" />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="news-pagination">
+    <div class="pagination" style="font-family: 'Rakkas'; color: black; font-weight: 900;">
+        @Html.PagedListPager(Model, page => Url.Action("Profiles",
+ new { id = ViewBag.Username, page = page }) )
+        </div>
+</nav>
+<script>
+
+    var ITEM_DATA = @Html.Raw(Json.Encode(zaPrikaz));
+    console.log(ITEM_DATA);
+
+
+    $('.item > button').on('click', function(e) {
+            var id = $(this).attr('item-id');
+            var item = $.grep(ITEM_DATA, function (e) { return e.ID == id; });
+            $('#itemModal .item-icon').attr('src', ServerAddress+'Images/'+ item[0]['Image'] + '.PNG');
+    $('#itemModal .item-name').text(item[0]['Image']);
+    $('#itemModal .item-dmg').text(item[0]['Demage']);
+    $('#itemModal .item-mana').text(item[0]['Mana']);
+    $('#itemModal .item-health').text(item[0]['Health']);
+    $('#itemModal .item-armor').text(item[0]['Armor']);
+    $('#itemModal .item-id').attr('value',item[0]['ID']);
+
+        });
+</script>

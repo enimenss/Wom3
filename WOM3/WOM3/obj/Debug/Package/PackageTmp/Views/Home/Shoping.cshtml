@@ -1,0 +1,157 @@
+﻿
+@model PagedList.IPagedList<WOM3.Models.Items>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Shoping";
+}
+@{
+    if (ViewBag.FriendRequests > 0)
+    {
+        <script>
+            notifyFriendRequest(@ViewBag.FriendRequests)
+        </script>
+    }
+}
+
+@{
+    WOM3.Models.User user = (WOM3.Models.User)TempData["user"];
+
+    if (user.NumOfNews > 0)
+    {
+        <script>
+    notification(@user.NumOfNews);
+        </script>
+    }
+}
+
+
+
+<div>
+    <h4>Shop</h4>
+    <hr />
+    <img src="@Url.Content("~/Images/"+user.Avatar)" width="100" height="100" />
+    <span>Gold = <strong>@user.UserStats.Gold</strong></span>
+
+@using (Html.BeginForm("Shoping", "Home", FormMethod.Post))
+{
+
+    <input type="hidden" name="page" value=@Model.PageNumber />
+
+    <table class="table">
+        <caption>
+            <h3><strong> Itemi! </strong> </h3>
+        </caption>
+        <tr style="background-color:#555">
+            <th>
+                Image
+            </th>
+            <th>
+                Health
+            </th>
+            <th>
+                Mana
+            </th>
+            <th>
+                Armor
+            </th>
+            <th>
+                HealthReg
+            </th>
+            <th>
+                ManaReg
+            </th>
+            <th>
+                Demage
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Spell
+            </th>
+            <th>
+                Kupi/Prodaj
+            </th>
+        </tr>
+
+       @foreach (var item in Model)
+       {
+            <tr>
+                <td>
+                    <img src="@Url.Content("~/Images/" + item.Image)" width="40" height="40" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Health)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mana)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Armor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HealthReg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManaReg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Demage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @if (item.Spell != null)
+                {
+                    <td style="background-color:#ff0000">
+                        Dmg: @Html.DisplayFor(modelItem => item.Spell.Demage)
+                        Area:  @Html.DisplayFor(modelItem => item.Spell.Area)
+                    </td>
+                }
+                else
+                {
+                    <td>Ne Poseduje</td>
+                }
+                <td>
+                    @{ WOM3.Models.UserItems c = user.UserItems.Where(x => x.ItemID == item.ID).FirstOrDefault();}
+                    @if (c != null)
+                    {
+                        <button type="submit" name="ProdajId" value="@item.ID" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-shopping-cart"></span> Prodaj</button>
+          
+
+                    }
+                    else
+                    {
+                        if (item.Price > user.UserStats.Gold)
+                        {
+                            <p>Nemas pare</p>
+                        }
+                        else
+                        {
+                            <button type="submit" name="KupiId" value="@item.ID" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Kupi</button>
+                        }
+                    }
+                </td>
+
+            </tr>
+
+                        }
+    </table>
+
+    <br />
+
+        }
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Shoping",
+    new { page }))
+
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

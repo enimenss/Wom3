@@ -1,0 +1,169 @@
+﻿@model IEnumerable<WOM3.Models.Messages>
+@using WOM3.Models;
+
+@{
+    ViewBag.Title = "Message";
+}
+
+@{
+    var friends = (List<OnlineFriends>)TempData["friends"];
+    var friendObj = (OnlineFriends)TempData["Friend"];
+    int SeenId = (int)TempData["SeenId"];
+    var me = (OnlineFriends)TempData["Me"];
+    string friendId = friendObj.Username;
+    string id = friendId + 'm';
+    var ServerAddress =@Request.Url.Scheme + "://" + @Request.Url.Authority + @Request.ApplicationPath.TrimEnd('/') ;
+
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/Content/MojChatCss/Chat.css" />
+
+<style>
+    .circleOff {
+        color: white;
+        background-color:white;
+    }
+</style>
+<div class="row" width="87%" height="100%" style="margin-top:0">
+
+    <div class="col-md-3" width="100%" height="100%" style="float:left;margin-top:1%; margin-right: 0">
+        <div style="overflow-y: scroll; overflow-x: scroll; width: 80%;height: 112vh; opacity: 0.8; border-width: 2px; border-color: black; border-style: solid;">
+            <h1 style="text-align: center; font-size: 180%; font-family:'MedievalSharp'; color: black; margin-top: 0px; margin-bottom: 30px; font-weight: bold; border-bottom-width: 3px;color:white; border-bottom-color: black; border-bottom-style: solid;"> Friends </h1>
+            <div class="chat">
+                <ul class="nav" style="width:100%;font-family:'MedievalSharp'; color:black; font-size: 135%; font-weight: bold;text-decoration: none;">
+                    
+                        @if (friends != null)
+                        {
+                            foreach (var friend in friends)
+                            {
+                                string idd = friend.Username + "dz";
+                                string num = "(" + friend.NumOfNotSeen + ")";
+                                <li style="width:100%;height:80px;background-image: url(@ServerAddress/Images/scroll.png);background-size : 100% 100%;background-repeat:no-repeat;background-origin:content-box;">
+                                    <a style="margin:auto;height:100%" href='@Url.Action("Message", "Home", new { id = friend.Username })'> 
+                                        <div style='height:100%;float:left;margin-right:3%'>
+                                                <img class='slicka' style='float:left' src="@Url.Content("~/Images/"+friend.Avatar)" width='60' height='60' />
+                                            </div>&nbsp;<span style='float:left'><strong style='font-size:20px'> @friend.Username
+                                            <span style='font-size:17px;margin-left:0' class="NumOfNotSeen">@if (friend.NumOfNotSeen > 0) { <span>@num</span> }</span> 
+                                               </strong>
+                                            </span>
+                                        <span style="float:left;margin-left:3%" id='@idd'>@if (friend.isInGame)
+                                        {<img style='margin-bottom:10px' src='@ServerAddress/Images/dzojstik.png' width='25' height='20' />} </span>
+                                        <span class="fromChat" style="float:right" id='@friend.Username'><span style="float:left;margin-top:80%" class="@(friend.isOnline?"circle":"circleOff")"> </span></span>
+                                        <p style='width:60%;font-size:14px;white-space: nowrap;overflow:hidden;text-overflow:ellipsis'> @friend.Message.Message </p>
+                                    </a>
+                                </li>
+                    <li style = "height:10px" ></li>
+                            }
+                        }
+
+                    @*dropdown.append("
+            <a href='@Url.Action(@friend.Username, "Message", "Home", new { id = friend.Username }, new { area = "" })' ><p><div style='height:100%;float:left;margin-right:3%'><img class='slicka' style='float:left' src="@Url.Content("~/Images/"+friend.Avatar)" width='60' height='60' />
+    </div>&nbsp;<span style='float:left'><strong style='font-size:20px'>" + @friend.Username + "&nbsp; <span class="NumOfNotSeen">@if (friend.NumOfNotSeen > 0){ <span>@num</span> }</span> </strong>span style="margin-left:3%" id='@idd'>@if (friend.isInGame) {<img style='margin-bottom:10px' src='@ServerAddress/Images/dzojstik.png' width='25' height='25' />} </span></span><span class="fromChat" style="float:right" id='@friend.Username'><span style="float:left;margin-top:80%" class="@(friend.isOnline?"circle":"circleOff")"> </span></span></p><p style='font-weight:400;white-space: nowrap;overflow:hidden;text-overflow:ellipsis'>" + @friend.Message + "</p></a></li>");*@
+            </ul>
+        </div>
+        </div>
+    </div>
+    <div class="col-xs-7" id="seen" width="100%"style="text-align:center;float:left;margin-top: 0.2%; margin-right: 0;margin-left:0;padding-left:0;">
+        <h1 style="text-align: center; font-size: 180%; font-family:'MedievalSharp'; color: black; margin-top: 1px; margin-bottom: 5px; font-weight:bold;color:white ;"> Poruke </h1>
+        <div style="background-image: url(@ServerAddress/Images/scroll.png); background-size: 100% 100%;background-repeat: no-repeat; background-origin: content-box;width: 80%;height:500px;margin:auto;padding-top:8px">
+        <div style="overflow-y:scroll;overflow-x:hidden;width:100%;height:97%; opacity: 0.8;padding-top:3%;padding-bottom:3%;margin-top:6px" class="chatProba">
+            <div id="@id" style="width:100%;">
+                @{ var i = 0;
+                    var trenutna = Model.FirstOrDefault();
+                }
+                @foreach (var mesage in Model)
+                {
+                    if (i == 0)
+                    {
+                        i++;
+                        continue;
+                    }
+                    if (@trenutna.UsernameId == Session["user"].ToString())
+                    {
+
+                        <div value='@(trenutna.isRead==1?1:0)' class="send" style="margin-right:5%;margin-top:0.5%;margin-bottom:0.5%;float:right;width:55%">
+                            @if (@mesage.UsernameId != Session["user"].ToString())
+                            {<img src="@Url.Content("~/Images/" + @trenutna.User.Avatar)" class="slicka" style="float:right;margin-left:3%" width="38" height="38" />
+                            }
+                            else
+                            {
+                                <span style="float:right;margin-left:3%;width:38px;height:1px"></span>
+                            }
+                            <div style="width:70%;float:right">
+                                <div class="round-corner send tooltipR" style=" float:right;word-wrap:break-word;background-color:blue;color:white;max-width:70%;text-align:right;font-size:20px">@trenutna.Message <span class="tooltiptextR">@trenutna.Datum.ToString()</span></div>
+                                @if (trenutna.id == SeenId)
+                                {
+                                    <p class="myseen" style="float:right;width:100%"><span class="tooltipS" style="float:right"><img src="@Url.Content("~/Images/" + friendObj.Avatar)" class="slicka" style="float:right" width="24" height="24" /><span class="tooltiptextS">Seen !!!</span></span></p>
+                                }
+                                </div>
+                            </div> //sredi ovo da bude div ko dole
+                    }
+                    else
+                    {
+                        <div value='@(trenutna.isRead==1?1:0)' class="recv" style="margin-left:5%;margin-top:0.5%;margin-bottom:0.5%;float:left;width:55%">
+                            @if (@mesage.UsernameId == Session["user"].ToString())
+                            {<img src="@Url.Content("~/Images/" + @friendObj.Avatar)" class="slicka" style="float:left;margin-right:3%" width="38" height="38" />
+                            }
+                            else
+                            {
+                                <span style="float:left;margin-right:3%;width:38px;height:1px"></span>
+                            }
+                            <span class="round-corner tooltipR" style="float:left;max-width:70%;word-wrap: break-word;background-color:dimgrey;color:white;font-size:20px">@trenutna.Message <span class="tooltiptextR">@trenutna.Datum.ToString()</span></span>
+                        </div>
+                    }
+                    <div style="width:100%;float:left"></div>
+                    trenutna = mesage;
+                }
+                @if (trenutna != null)
+                {
+                    if (@trenutna.UsernameId == Session["user"].ToString())
+                    {
+                        <div value='@(trenutna.isRead==1? 1 : 0)' class="send" style="margin-right:5%;margin-top:0.5%;margin-bottom:0.5%;float:right;width:55%">
+                            <img src="@Url.Content("~/Images/" + @trenutna.User.Avatar)" class="slicka" style="float:right;margin-left:3%" width="38" height="38" />
+                            <div style="width:70%;float:right">
+                                <div class="round-corner send tooltipR" style="float:right;word-wrap:break-word;background-color:blue;color:white;max-width:100%;text-align:right;font-size:20px">@trenutna.Message <span class="tooltiptextR">@trenutna.Datum.ToString()</span></div>
+                                @if (trenutna.isRead==1)
+                                {
+                                    <p class="myseen" style="float:right;width:100%"><span class="tooltipS" style="float:right"><img src="@Url.Content("~/Images/" + friendObj.Avatar)" class="slicka" style="float:right" width="24" height="24" /><span class="tooltiptextS">Seen !!!</span></span></p>
+                                }
+                            </div>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div value='@(trenutna.isRead==1 ? 1 : 0)' class="recv" style="margin-left:5%;margin-top:0.5%;margin-bottom:0.5%;float:left;width:55%">
+
+                            <img src="@Url.Content("~/Images/" + @friendObj.Avatar)" class="slicka" style="float:left;margin-right:3%" width="38" height="38" />
+
+                            <span  class="round-corner tooltipR" style="float:left;max-width:70%;word-wrap: break-word;background-color:dimgrey;color:white;font-size:20px"> @trenutna.Message<span class="tooltiptextR">@trenutna.Datum.ToString()</span></span>
+                        </div>
+                    }
+
+                    <div style="width:100%;float:left"></div>
+                }
+
+
+            </div>
+
+
+        </div>
+        </div>
+        <button id="msg" value="@friendId" hidden="hidden"></button>
+        <textarea id="posalji" onfocus="onFocus()" onblur="onBlur()" class="fromChat" style="width:60%;height:60px;margin-top:1.5%;border-radius:9px" placeholder="Posalji poruku "></textarea>
+    </div>
+
+
+</div>
+<footer style="height: 10%; font-size: 150%; color: white; text-align: center; margin-top: 5%">
+    War of Mages, Biser2® 2017
+</footer>
+<script>
+    var friendObj = @Html.Raw(Json.Encode(friendObj));
+    var Me =@Html.Raw(Json.Encode(me) );
+    var Identity = '@Session["User"].ToString()';
+</script>
+<script>
+    $(".chatProba").animate({ scrollTop: document.getElementsByClassName('chatProba')[0].scrollHeight }, "fast");   
+</script>

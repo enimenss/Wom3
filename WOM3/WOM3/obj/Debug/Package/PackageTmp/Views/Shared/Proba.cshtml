@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<style>
+    html{
+	/* This image will be displayed fullscreen */
+	background:url(http://localhost:5611/Images/poz.jpg) no-repeat center fixed;
+
+	/* Ensure the html element always takes up the full height of the browser window */
+	min-height:100%;
+
+	/* The Magic */
+	background-size:cover;
+    background-size: 100%;
+   background-repeat: no-repeat;
+      }
+</style>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+        <script type="text/javascript">
+                 function Gasi_dugme() {
+                     $("#Button1").hide();
+                 }
+                 function Pali_dugme() {
+                     $("#Button1").show();
+                 }
+
+
+             setInterval(
+             function() {
+                $("#Button1").toggleClass("btn-normal");
+             }, 250);
+        </script>
+
+        <style>
+            .boja {
+                background-color: blue;
+            }
+
+
+
+            body {
+                /*background-image: url(http://localhost:5611/Images/poz.jpg);*/
+                /*width: 100%;*/
+                /*background-size: 100%;
+                background-repeat: no-repeat;*/
+                /*background-color: #cccccc;*/
+                min-height:100%;
+
+                background:url(http://localhost:5611/Images/poz.jpg) no-repeat center fixed;
+
+	/* Ensure the html element always takes up the full height of the browser window */
+	min-height:100%;
+
+	/* The Magic */
+	background-size:cover;
+    background-size: 100%;
+   background-repeat: no-repeat;
+            }
+
+                body.modal-open .modal {
+                    display: flex !important;
+                }
+
+                    body.modal-open .modal .modal-dialog {
+                        margin: auto;
+                    }
+
+            * {
+                -webkit-border-radius: 0 !important;
+                -moz-border-radius: 0 !important;
+                border-radius: 0 !important;
+            }
+
+            .btn-big {
+                -webkit-border-radius: 15px !important;
+                -moz-border-radius: 15px !important;
+                border-radius: 15px !important;
+            }
+
+            .btn-big {
+                font-size: large;
+                height: 60px;
+                width:250px;
+                background-color:darkgrey;
+            }
+
+                .btn-big:hover {
+                    font-size: large;
+                    height: 60px;
+                    width:250px;
+                }
+
+            .btn-normal {
+                font-size: medium;
+                height: 40px;
+                width:210px;
+            }
+        </style>
+    </head>
+
+<body>
+    <div class="container body-content">
+        @RenderBody()       
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

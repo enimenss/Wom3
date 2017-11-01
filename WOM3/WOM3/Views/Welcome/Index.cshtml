@@ -1,0 +1,103 @@
+﻿@model WOM3.Models.EmailReg
+
+
+@{
+     Layout= null;
+    ViewBag.Title = "Index";
+}
+
+
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>War of Mages</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/coverstyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .emailcss {
+            width: 33%;
+            margin-left: 9%;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="womslika">
+        <div class="col-md-3" style="min-width: 25%; margin-top: 5%">
+        </div>
+        <div class="col-md-6" style="height: 100%">
+            <div>@ViewBag.Incorect</div>
+            <button type="button" class="playnow" data-toggle="modal" data-target="#itemModal">Play now</button>
+            <footer style="height: 10%; font-size: 120%; color: white; text-align: center; margin-top: 20%; font-family:'MedievalSharp';">
+                War of Mages, Biser2® 2017
+            </footer>
+        </div>
+        <div class="col-md-3" style="min-width: 25%; margin-top: 5%">
+        </div>
+    </div>
+    <div class="modal modal-scroll fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-md3" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h4 class="modal-title item-name" style="text-align: center; margin-bottom: 5%; font-weight: 900; font-family: 'MedievalSharp'; font-size: 190%;">Login</h4>
+
+                        <div class="col-md-6">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-group" style="margin-top: 5%">
+                                    <div>
+                                        <label for="usr" style="font-weight: 900; font-family: 'MedievalSharp'; text-align: center;  margin-left: 9%; font-size: 120%;">Username:</label>
+                                        <input type="text" name="Username" class="form-control" id="usr" style="width: 80%; margin-left: 9%; border-style: solid; border-width: 2px; border-color: black;" align="center">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd" style="font-weight: 900; font-family: 'MedievalSharp'; margin-left: 9%; font-size: 120%;">Password:</label>
+                                    <input type="password" name="Pass" class="form-control" id="pwd" style="width: 80%; margin-left: 9%; border-style: solid; border-width: 2px; border-color: black;">
+                                    <div style="margin-left: 9%">@Html.ActionLink("Forget password", "Index", "Forget")</div>
+                                </div>
+                                <button type="submit" style="font-weight: 900; font-family: 'MedievalSharp'; margin-left: 12%; font-size: 120%;border-style: solid; border-width: 2px; border-color: black;">Login</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+                <div class="modal-body">
+                    <hr>
+                    <br>
+                    <h5 class="modal-title item-name" style="text-align: center; margin-bottom: 5%; font-weight: 900; font-family: 'MedievalSharp'; font-size: 170%; margin-top: 0;">Register</h5>
+                    @using (Html.BeginForm())
+                   {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group" style="margin-top: 5%">
+                            <div>
+                                <label for="usr" style="font-weight: 900; font-family: 'MedievalSharp'; text-align: center;  margin-left: 9%; font-size: 120%;">Email:</label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control emailcss" } })
+                                
+                            </div>
+                        </div>
+                        <button type="submit" style="font-weight: 900; font-family: 'MedievalSharp'; margin-left: 12%; font-size: 120%;border-style: solid; border-width: 2px; border-color: black;">Send</button>
+                    }
+                    </hr>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="margin-right: 41%; font-weight: 900; font-family: 'MedievalSharp'; border-style: solid;
+	border-width: 2px;
+	border-color: black;" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,252 @@
+﻿@model WOM3.Models.User
+@using PagedList.Mvc;
+@using WOM3.Models;
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+
+@{ 
+    List<OnlineFriends> lista = (List<OnlineFriends>)TempData["Online"];
+}
+
+@if (Session["user"].ToString() ==Model.Username)
+{
+    <h2> @Model.Username</h2>
+
+    if (Model.NumOfNews > 0)
+    {
+        <script>
+    notification(@Model.NumOfNews);
+        </script>
+    }
+}
+else
+{ <h2>Tudji Profil</h2>}
+
+@if (ViewBag.ownNews > 0)
+    {
+<script>
+    notification(@ViewBag.ownNews);
+</script>
+    }
+
+@{
+    if (ViewBag.FriendRequests > 0)
+    {
+        <script>
+            notifyFriendRequest(@ViewBag.FriendRequests)
+        </script>
+    }
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+     <h3><strong>Pregled:</strong></h3>
+            <dl class="dl-horizontal">
+            
+                <dt>
+                <img src="@Url.Content("~/Images/"+Model.Avatar)" width="100" height="100" />
+                    </dt>
+                <dd></dd>
+               
+                
+              
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Username)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                </dl>
+                <h3> <strong>Statistika:</strong> </h3>
+
+                <dl class="dl-horizontal">
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserStats.Wins)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserStats.Wins)
+                    </dd>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserStats.Loses)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserStats.Loses)
+                    </dd>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserStats.Total)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserStats.Total)
+                    </dd>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserStats.Points)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserStats.Points)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserStats.Gold)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserStats.Gold)
+                    </dd>
+         
+    @if (Session["user"].ToString() != Model.Username)
+    {
+        <dt id="reqMess">
+            
+            @if (ViewBag.poslaoZahtev == 1)
+            {
+                <span><strong>Korisnik vam je vec poslao zahtev</strong></span>
+            }
+            else
+            {
+
+
+                if (ViewBag.FR == 0)
+                {
+                    if (ViewBag.Friend == 0)
+                    {
+
+            <button id="request" value="@Model.Username" class="posalji btn btn-primary btn-primary">Send Request &nbsp;<span class="glyphicon glyphicon-user"></span></button>
+
+
+                    }
+                    else
+                    {
+            <button id="msg" value="@Model.Username" onclick="posaljiP()"  class="btn btn-primary btn-success">Send Message &nbsp;<span class="glyphicon glyphicon-user"></span></button>
+            <textarea id="posalji" placeholder="Posalji poruku " class="dropdown-content"></textarea>
+            <strong id="isSend"></strong>
+                    }
+                }
+                else
+                {
+            <span><strong>Zahtev za Prijateljstvo poslat</strong></span>
+                }
+            }
+
+        </dt>
+    }
+
+                </dl>
+             @if (Session["user"].ToString() == Model.Username)
+             {
+            <div>
+                <h3><strong>Friends</strong></h3>
+                <ul id="friends" class="online">
+                    @foreach (var p in lista)
+                    {
+                        <li id='@p.Username'>
+                            <div style='float:left'><img src=http://localhost:5611/Images/@p.Avatar  width='15' height='15' />&nbsp;</div>
+                            <div style="float:left"><strong>@Html.ActionLink(@p.Username, "Profiles", "Home", new { id = @p.Username }, new { area = "" })&nbsp;</strong></div>
+                 
+                            @if (p.isOnline)
+                            {
+                                <div class="circle"></div>
+
+                            }
+                        </li>
+                    }
+                    </ul>
+        </div>
+             }
+   </div>
+        <div class="col-md-8">
+            <div>
+                @{
+                    Html.RenderAction("UserItems", "Home", new { username = Model.Username, page = ViewBag.page });
+                }
+            </div>
+            @if (Session["user"].ToString() == Model.Username)
+            {
+            <table class="table">
+                <caption>
+                   <h3> <strong>Statistika sa Herojima !</strong></h3>
+                </caption>
+                <tr style="background-color:#555">
+                    <th>
+                        Hero Name
+                    </th>
+                    <th>
+                        Total Games
+                    </th>
+                    <th>
+                        Wins
+                    </th>
+                    <th>
+                        Loses
+                    </th>
+                </tr>
+                @foreach (var hero in Model.UserHeroes)
+                {
+                 <tr>
+        
+                <th>
+                    <img src="@Url.Content("~/Images/"+hero.Hero.Image)" width="40" height="40" /> @Html.DisplayFor(model => hero.Name)
+                </th>
+
+               
+
+                <td>
+                    @Html.DisplayFor(model => hero.Total)
+                </td>
+
+              
+                <td>
+                    @Html.DisplayFor(model => hero.Wins)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => hero.Loses)
+                </td>
+                     </tr>
+                }
+                </table>
+            }
+            <br />
+               
+               
+         </div>
+    </div>
+</div>
+
+<script>
+    posaljiP = function () {
+        document.getElementById("posalji").classList.toggle("show");
+    }
+
+   
+
+    function htmlEncode(value) {
+        var encodedValue = $('<div />').text(value).html();
+        return encodedValue;
+    }
+
+</script>

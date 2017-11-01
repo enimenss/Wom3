@@ -1,0 +1,86 @@
+﻿
+@model PagedList.IPagedList<WOM3.Models.UserStats>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Result";
+    var ServerAddress = @Request.Url.Scheme + "://" + @Request.Url.Authority + @Request.ApplicationPath.TrimEnd('/');
+}
+
+@*@{
+    IQueryable<WOM3.Models.UserStats> stats = (IQueryable<WOM3.Models.UserStats>)TempData["stats"];
+}*@
+
+
+<body class="backgroundslika">
+
+    <div class="container" style="height: 100%; overflow-y:hidden; background-image: url('@ServerAddress/Images/scroll.png'); background-size: 100% 100%; background-repeat: no-repeat; background-origin: content-box; ">
+        <div class="row">
+            <div class="col-md-3" style="margin-top: 3%">
+                @using (Html.BeginForm("result", "Home", FormMethod.Get))
+                {
+                    <div style="margin-left: 33%; margin-top: 25%;">
+                     
+                        <span class="glyphicon glyphicon-sort-by-order"></span>
+                        <select style="width:50%" name="sort" onchange="this.form.submit()">
+                            <option value="Total" @(ViewBag.sort == "Total" ? "selected" : "")>Total</option>
+                            <option value="Win" @(ViewBag.sort == "Win" ? "selected" : "")>Win</option>
+                            <option value="Lose" @(ViewBag.sort == "Lose" ? "selected" : "")>Lose</option>
+                        </select>
+                    </div>
+                }
+            </div>
+            <div class="col-md-6" style="margin-top: 3%">
+                <h2 style="text-align: center"> Ranking </h2>
+                <table class="table table-bordered">
+                    <thead style="border-width: 3px; border-color: black; border-style: solid;">
+                        <tr>
+                            <th>Username</th>
+                            <th>Total</th>
+                            <th>Wins</th>
+                            <th>Loses</th>
+                            <th>Points</th>
+                            <th>Gold</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr style="border-width: 3px; border-color: black; border-style: solid;">
+                                    <td><img src="@Url.Content("~/Images/"+item.User.Avatar)" width="30" height="30" />  @Html.ActionLink(item.Username, "Profiles", "Home", new { id = item.Username }, new { area = "" })</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Wins)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Loses)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Points)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Gold)</td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3" style="margin-top: 3%">
+                @using (Html.BeginForm("result", "Home", FormMethod.Get))
+                {
+                    <div style="margin-left: 3%; margin-top: 25%;">
+                        @Html.TextBox("SearchString")
+                        <button type="submit" class="btn btn-md btn-info"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+
+                }
+            </div>
+
+        </div>
+        <div style="padding-left:40%">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("result",
+    new { sort = ViewBag.sort, page, area = "", prevSearch = ViewBag.Search }))
+            </div>
+    </div>
+</body>
